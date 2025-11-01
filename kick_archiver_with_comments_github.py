@@ -4,7 +4,6 @@ import time
 from datetime import datetime, timedelta, timezone
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
-
 from kick import analyze_comments  # 既存の kick.py 内関数を利用する想定
 
 # === 設定 ===
@@ -125,7 +124,6 @@ def save_comment_stats(video, comments):
         return
 
     try:
-        from kick import analyze_comments
         result = analyze_comments(comments)
 
         data = {

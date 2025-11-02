@@ -98,6 +98,7 @@ def fetch_archives(max_retries=3):
 # === コメント取得 ===
 def get_chat_messages(start_time_iso):
     """指定時刻以降のコメントを取得"""
+    print("get chat messages.")
     start_time_encoded = quote(start_time_iso, safe="")
     headers = {
         "User-Agent": (

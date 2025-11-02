@@ -134,6 +134,7 @@ def get_all_comments(start_time_iso, end_time):
     current_iso = current.isoformat()
 
     while current < end_time:
+        print(f"取得中: {current}/{end_time}")
         messages = get_chat_messages(current_iso)
         if not messages:
             current += timedelta(seconds=5)

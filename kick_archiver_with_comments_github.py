@@ -16,7 +16,7 @@ print = functools.partial(print, file=sys.stderr, flush=True)
 # === 設定 ===
 CHANNEL_ID = "56495977"
 CHANNEL_NAME = "mokoutoaruotoko"
-API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_ID}/videos"
+API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_NAME}/videos"
 ARCHIVE_FILE = "kick_archives.json"
 COMMENTS_DIR = "comments"
 

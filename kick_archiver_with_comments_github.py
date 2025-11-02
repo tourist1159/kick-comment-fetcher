@@ -6,6 +6,12 @@ from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 from kick import analyze_comments  # 既存の kick.py 内関数を利用する想定
+import sys
+import functools
+
+# すべての print() を stderr に出す
+print = functools.partial(print, file=sys.stderr, flush=True)
+
 
 # === 設定 ===
 CHANNEL_ID = "mokoutoaruotoko"

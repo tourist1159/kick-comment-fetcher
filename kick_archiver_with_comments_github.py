@@ -14,7 +14,8 @@ print = functools.partial(print, file=sys.stderr, flush=True)
 
 
 # === 設定 ===
-CHANNEL_ID = "mokoutoaruotoko"
+CHANNEL_ID = "56495977"
+CHANNEL_NAME = "mokoutoaruotoko"
 API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_ID}/videos"
 ARCHIVE_FILE = "kick_archives.json"
 COMMENTS_DIR = "comments"
@@ -75,7 +76,7 @@ def fetch_archives(max_retries=3):
                         "uuid": v.get("video", {}).get("uuid"),
                         "title": v.get("session_title") or v.get("slug") or "",
                         "created_at": v.get("video", {}).get("created_at"),
-                        "url": f"https://kick.com/{CHANNEL_ID}/videos/{v.get('video', {}).get('uuid')}",
+                        "url": f"https://kick.com/{CHANNEL_NAME}/videos/{v.get('video', {}).get('uuid')}",
                         "duration": v.get("duration"),
                     }
                     for v in data if not v.get("is_live")
@@ -98,7 +99,6 @@ def fetch_archives(max_retries=3):
 # === コメント取得 ===
 def get_chat_messages(start_time_iso):
     """指定時刻以降のコメントを取得"""
-    print("get chat messages.")
     start_time_encoded = quote(start_time_iso, safe="")
     headers = {
         "User-Agent": (
@@ -111,6 +111,7 @@ def get_chat_messages(start_time_iso):
         "Accept-Language": "en-US,en;q=0.9",
         "Connection": "keep-alive",
     }
+    print(url)
     url = f"https://kick.com/api/v2/channels/{CHANNEL_ID}/messages?start_time={start_time_encoded}"
 
     try:

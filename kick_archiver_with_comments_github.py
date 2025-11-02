@@ -4,6 +4,7 @@ import time
 from datetime import datetime, timedelta, timezone
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
+from urllib.parse import quote
 from kick import analyze_comments  # 既存の kick.py 内関数を利用する想定
 
 # === 設定 ===
@@ -40,40 +41,57 @@ def format_duration(ms):
 
 
 # === アーカイブ取得 ===
-def fetch_archives():
+def fetch_archives(max_retries=3):
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
             "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/120.0.0.0 Safari/537.36"
+            "Chrome/123.0.0.0 Safari/537.36"
         ),
         "Accept": "application/json, text/plain, */*",
+        "Referer": "https://kick.com/",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Connection": "keep-alive",
     }
 
-    req = Request(API_URL, headers=headers)
-    with urlopen(req) as res:
-        data = json.loads(res.read().decode("utf-8"))
+    for attempt in range(max_retries):
+        try:
+            req = Request(API_URL, headers=headers)
+            with urlopen(req, timeout=15) as response:
+                if response.status != 200:
+                    print(f"HTTPステータス: {response.status}")
+                    continue
+                raw = response.read().decode("utf-8")
+                data = json.loads(raw)
+                return [
+                    {
+                        "id": v.get("id"),
+                        "uuid": v.get("video", {}).get("uuid"),
+                        "title": v.get("session_title") or v.get("slug") or "",
+                        "created_at": v.get("video", {}).get("created_at"),
+                        "url": f"https://kick.com/{CHANNEL_ID}/videos/{v.get('video', {}).get('uuid')}",
+                        "duration": v.get("duration"),
+                    }
+                    for v in data if not v.get("is_live")
+                ]
 
-    archives = []
-    for v in data:
-        if v.get("is_live"):
-            continue
-        video = v.get("video", {})
-        archives.append({
-            "id": v.get("id"),
-            "uuid": video.get("uuid"),
-            "title": v.get("session_title") or v.get("slug") or "",
-            "created_at": to_iso(video.get("created_at") or v.get("created_at")),
-            "url": f"https://kick.com/{CHANNEL_ID}/videos/{video.get('uuid')}",
-            "duration": format_duration(v.get("duration")),
-        })
-    return archives
+        except HTTPError as e:
+            print(f"[{attempt+1}/{max_retries}] HTTPエラー: {e.code}")
+            time.sleep(3)
+        except URLError as e:
+            print(f"[{attempt+1}/{max_retries}] URLエラー: {e.reason}")
+            time.sleep(3)
+        except Exception as e:
+            print(f"[{attempt+1}/{max_retries}] その他のエラー: {e}")
+            time.sleep(3)
+
+    print("Kick APIアクセスに失敗しました。")
+    return []
 
 
 # === コメント取得 ===
 def get_chat_messages(start_time_iso):
     """指定時刻以降のコメントを取得"""
-    from urllib.parse import quote
     start_time_encoded = quote(start_time_iso, safe="")
     headers = {"User-Agent": "Mozilla/5.0"}
     url = f"https://kick.com/api/v2/channels/{CHANNEL_ID}/messages?start_time={start_time_encoded}"

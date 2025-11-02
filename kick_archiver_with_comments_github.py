@@ -111,7 +111,6 @@ def get_chat_messages(start_time_iso):
         "Accept-Language": "en-US,en;q=0.9",
         "Connection": "keep-alive",
     }
-    print(url)
     url = f"https://kick.com/api/v2/channels/{CHANNEL_ID}/messages?start_time={start_time_encoded}"
 
     try:

@@ -10,8 +10,10 @@ import sys
 import functools
 
 # すべての print() を stderr に出す
-print = functools.partial(print, file=sys.stderr, flush=True)
+#print = functools.partial(print, file=sys.stderr, flush=True)
 
+# === ユーザーが指定する基準日時（ここを変更してください） ===
+USER_START_DATE = "2025-10-29T00:00:00+09:00"
 
 # === 設定 ===
 CHANNEL_ID = "56495977"
@@ -194,7 +196,16 @@ def main():
             local_archives = []
 
         known_ids = {a["id"] for a in local_archives}
-        remote_archives = fetch_archives()
+        
+        remote_archives = fetch_archives()    
+            
+        # ユーザーが指定した基準日時を UTC に変換        
+        user_start_dt = datetime.fromisoformat(USER_START_DATE).astimezone(timezone.utc)    
+        # 指定日時以降のアーカイブのみ対象
+        remote_archives = [
+            v for v in remote_archives
+            if datetime.fromisoformat(v["created_at"]) >= user_start_dt
+        ]
 
         new_archives = [a for a in remote_archives if a["id"] not in known_ids]
         if not new_archives:

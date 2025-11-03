@@ -32,10 +32,9 @@ def to_iso(dt_str):
     if not dt_str:
         return None
     try:
-        if "Z" not in dt_str:
-            dt = datetime.strptime(dt_str, "%Y-%m-%d %H:%M:%S")
-            return dt.replace(tzinfo=timezone.utc).isoformat()
-        return dt_str
+        newdt = dt_str.replace(" ", "T")
+        if (not "Z" in newdt ): newdt = newdt+"Z"
+        return datetime.fromisoformat(newdt).isoformat()
     except Exception:
         return None
 
@@ -72,17 +71,22 @@ def fetch_archives(max_retries=3):
                     continue
                 raw = response.read().decode("utf-8")
                 data = json.loads(raw)
-                return [
-                    {
+                formatted = []
+                # ユーザーが指定した基準日時を UTC に変換        
+                user_start_dt = datetime.fromisoformat(USER_START_DATE).astimezone(timezone.utc)    
+                for v in data:
+                    if v.get("is_live"): continue
+                    t = to_iso(v.get("start_time"))
+                    # 指定日時以降のアーカイブのみ対象
+                    if datetime.fromisoformat(t) < user_start_dt: continue
+                    formatted.append({
                         "id": v.get("id"),
                         "uuid": v.get("video", {}).get("uuid"),
-                        "title": v.get("session_title") or v.get("slug") or "",
-                        "created_at": v.get("video", {}).get("created_at"),
+                        "title": v.get("session_title") or "",
+                        "created_at": t,
                         "url": f"https://kick.com/{CHANNEL_NAME}/videos/{v.get('video', {}).get('uuid')}",
                         "duration": v.get("duration"),
-                    }
-                    for v in data if not v.get("is_live")
-                ]
+                    })
 
         except HTTPError as e:
             print(f"[{attempt+1}/{max_retries}] HTTPエラー: {e.code}")
@@ -97,6 +101,12 @@ def fetch_archives(max_retries=3):
     print("Kick APIアクセスに失敗しました。")
     return []
 
+# ---------- ローカル保存管理 ----------
+def load_local_archives():
+    if os.path.exists(ARCHIVE_FILE):
+        with open(ARCHIVE_FILE, "r", encoding="utf-8") as f:
+            return json.load(f)
+    return []
 
 # === コメント取得 ===
 def get_chat_messages(start_time_iso):
@@ -188,24 +198,10 @@ def save_comment_stats(video, comments):
 # === メイン ===
 def main():
     try:
-        # 既存アーカイブ読み込み
-        if os.path.exists(ARCHIVE_FILE):
-            with open(ARCHIVE_FILE, "r", encoding="utf-8") as f:
-                local_archives = json.load(f)
-        else:
-            local_archives = []
-
+        print("Fetching archive list...")
+        local_archives = load_local_archives()
         known_ids = {a["id"] for a in local_archives}
-        
         remote_archives = fetch_archives()    
-            
-        # ユーザーが指定した基準日時を UTC に変換        
-        user_start_dt = datetime.fromisoformat(USER_START_DATE).astimezone(timezone.utc)    
-        # 指定日時以降のアーカイブのみ対象
-        remote_archives = [
-            v for v in remote_archives
-            if datetime.fromisoformat(v["created_at"]) >= user_start_dt
-        ]
 
         new_archives = [a for a in remote_archives if a["id"] not in known_ids]
         if not new_archives:
@@ -224,6 +220,12 @@ def main():
         with open(ARCHIVE_FILE, "w", encoding="utf-8") as f:
             json.dump(local_archives, f, ensure_ascii=False, indent=2)
         print("kick_archives.json 更新完了。")
+        
+        RETENTION_DAYS = 7
+        for f in os.listdir("comments"):
+            path = os.path.join("comments", f)
+            if os.path.getmtime(path) < time.time() - RETENTION_DAYS * 86400:
+                os.remove(path)
 
     except Exception as e:
         print(f"実行中エラー: {e}")

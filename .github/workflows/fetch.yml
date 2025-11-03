@@ -5,12 +5,17 @@ on:
     - cron: "0 * * * *"  # 毎時0分に実行（日本時間+9時間考慮）
   workflow_dispatch:     # 手動実行も可能
 
+permissions:
+  contents: write
+
 jobs:
   fetch:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v4

@@ -10,7 +10,7 @@ import sys
 import functools
 
 # すべての print() を stderr に出す
-#print = functools.partial(print, file=sys.stderr, flush=True)
+print = functools.partial(print, file=sys.stderr, flush=True)
 
 # === ユーザーが指定する基準日時（ここを変更してください） ===
 USER_START_DATE = "2025-10-29T00:00:00+09:00"

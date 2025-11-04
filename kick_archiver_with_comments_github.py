@@ -46,6 +46,14 @@ def format_duration(ms):
         return time.strftime("%H:%M:%S", time.gmtime(s))
     except Exception:
         return "00:00:00"
+    
+    
+def compute_timeinfo(video):
+    start_time_iso = video["start_time"]
+    start_time_dt = datetime.fromisoformat(start_time_iso)
+    duration = video["duration"]
+    end_time_dt = start_time_dt + timedelta(milliseconds=duration)
+    return start_time_iso, start_time_dt, end_time_dt
 
 
 # === アーカイブ取得 ===
@@ -81,12 +89,14 @@ def fetch_archives(max_retries=3):
                     if datetime.fromisoformat(t) < user_start_dt: continue
                     formatted.append({
                         "id": v.get("id"),
+                        "video_id": v.get("video", {}).get("id"),
                         "uuid": v.get("video", {}).get("uuid"),
                         "title": v.get("session_title") or "",
-                        "created_at": t,
+                        "start_time": t,
                         "url": f"https://kick.com/{CHANNEL_NAME}/videos/{v.get('video', {}).get('uuid')}",
                         "duration": v.get("duration"),
                     })
+                return formatted
 
         except HTTPError as e:
             print(f"[{attempt+1}/{max_retries}] HTTPエラー: {e.code}")
@@ -129,7 +139,13 @@ def get_chat_messages(start_time_iso):
         req = Request(url, headers=headers)
         with urlopen(req, timeout=15) as res:
             data = json.loads(res.read().decode("utf-8"))
-            return data.get("data", {}).get("messages", [])
+            msg = data.get("data", {}).get("messages", [])
+            comment = {
+                'user_id': msg.get('user_id'),
+                'timestamp': msg.get('created_at'),
+                'text': msg.get('content') or ''
+            }
+            return comment
     except HTTPError as e:
         print(f"HTTPエラー: {e.code} {url}")
     except URLError as e:
@@ -139,18 +155,18 @@ def get_chat_messages(start_time_iso):
     return []
 
 
-def get_all_comments(start_time_iso, end_time):
+def get_all_comments(start_time_iso, start_time, end_time):
     """配信全体のコメントを取得"""
     all_comments = []
-    current = datetime.fromisoformat(start_time_iso)
-    current_iso = current.isoformat()
+    current = start_time
+    current_iso = start_time_iso
 
     while current < end_time:
         print(f"取得中: {current}/{end_time}")
         messages = get_chat_messages(current_iso)
         if not messages:
             current += timedelta(seconds=5)
-            current_iso = current.isoformat().replace("+00:00", "Z")
+            current_iso = current.isoformat()
             time.sleep(1)
             continue
 
@@ -159,7 +175,7 @@ def get_all_comments(start_time_iso, end_time):
         if not last_time:
             break
         current = datetime.fromisoformat(last_time) + timedelta(seconds=1)
-        current_iso = current.isoformat().replace("+00:00", "Z")
+        current_iso = current.isoformat()
         time.sleep(1)
 
     return all_comments
@@ -172,16 +188,11 @@ def save_comment_stats(video, comments):
         return
 
     try:
-        result = analyze_comments(comments)
 
         data = {
             "video_id": video["id"],
-            "title": video["title"],
-            "created_at": video["created_at"],
-            "comments_per_minute": [
-                {"time": t.isoformat(), "count": int(c)}
-                for t, c in zip(result["times"], result["counts"])
-            ],
+            "start_time": video["start_time"],
+            "comments": comments,
         }
 
         path = os.path.join("comments", f"{video['id']}_comments.json")
@@ -210,9 +221,8 @@ def main():
 
         for video in new_archives:
             print(f"新しいアーカイブ: {video['title']} ({video['id']})")
-            start_time = datetime.fromisoformat(video["created_at"])
-            end_time = start_time + timedelta(hours=3)  # 仮の最大長
-            comments = get_all_comments(video["created_at"], end_time)
+            start_time_iso, start_time_dt, end_time_dt = compute_timeinfo(video)
+            comments = get_all_comments(start_time_iso, start_time_dt, end_time_dt)
             save_comment_stats(video, comments)
             local_archives.append(video)
             time.sleep(3)

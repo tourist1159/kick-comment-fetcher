@@ -8,6 +8,7 @@ from urllib.parse import quote
 from kick import analyze_comments  # 既存の kick.py 内関数を利用する想定
 import sys
 import functools
+from pprint import pprint
 
 # すべての print() を stderr に出す
 print = functools.partial(print, file=sys.stderr, flush=True)
@@ -166,10 +167,10 @@ def get_all_comments(start_time_iso, start_time, end_time):
             continue
 
         for msg in messages:
-            id=msg.get('user_id'),
-            t=msg.get('created_at'),
+            id=msg['user_id']
+            t=msg.get('created_at')
             c=msg.get('content') or ''
-            all_comments.append({"user_id": id, "timestamp": t, "text": c})
+            all_comments.append({"id": id, "timestamp": t, "text": c})
             
         last_time = messages[-1].get("created_at")
         if not last_time:

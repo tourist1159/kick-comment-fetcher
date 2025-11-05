@@ -140,12 +140,7 @@ def get_chat_messages(start_time_iso):
         with urlopen(req, timeout=15) as res:
             data = json.loads(res.read().decode("utf-8"))
             msg = data.get("data", {}).get("messages", [])
-            comment = {
-                'user_id': msg.get('user_id'),
-                'timestamp': msg.get('created_at'),
-                'text': msg.get('content') or ''
-            }
-            return comment
+            return msg
     except HTTPError as e:
         print(f"HTTPエラー: {e.code} {url}")
     except URLError as e:
@@ -170,7 +165,12 @@ def get_all_comments(start_time_iso, start_time, end_time):
             time.sleep(1)
             continue
 
-        all_comments.extend(messages)
+        for msg in messages:
+            id=msg.get('user_id'),
+            t=msg.get('created_at'),
+            c=msg.get('content') or ''
+            all_comments.append({"user_id": id, "timestamp": t, "text": c})
+            
         last_time = messages[-1].get("created_at")
         if not last_time:
             break

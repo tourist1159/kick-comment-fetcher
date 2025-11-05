@@ -13,7 +13,7 @@ import functools
 print = functools.partial(print, file=sys.stderr, flush=True)
 
 # === ユーザーが指定する基準日時（ここを変更してください） ===
-USER_START_DATE = "2025-10-29T00:00:00+09:00"
+USER_START_DATE = "2025-11-05T00:00:00+09:00"
 
 # === 設定 ===
 CHANNEL_ID = "56495977"

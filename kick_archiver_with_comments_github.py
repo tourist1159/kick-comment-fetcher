@@ -23,6 +23,8 @@ API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_NAME}/videos"
 COMMENTS_GITHUB = "comments_github"
 COMMENTS_LOCAL = "comments_local"
 ARCHIVE_FILE = "kick_archives.json"
+os.makedirs(COMMENTS_GITHUB, exist_ok=True)
+os.makedirs(COMMENTS_LOCAL, exist_ok=True)
 
 # ローカル優先
 def get_comment_dir():

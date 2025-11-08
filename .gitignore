@@ -1,3 +1,2 @@
-# コメントファイルはローカル専用
-comments/*.json
-!comments/.keep  # 空フォルダ維持用
+comments_local/*
+!comments_local/.keep

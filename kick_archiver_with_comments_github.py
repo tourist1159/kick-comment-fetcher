@@ -5,7 +5,6 @@ from datetime import datetime, timedelta, timezone
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
 from urllib.parse import quote
-from kick import analyze_comments  # 既存の kick.py 内関数を利用する想定
 import sys
 import functools
 from pprint import pprint
@@ -14,18 +13,20 @@ from pprint import pprint
 print = functools.partial(print, file=sys.stderr, flush=True)
 
 # === ユーザーが指定する基準日時（ここを変更してください） ===
-USER_START_DATE = "2025-11-05T00:00:00+09:00"
+USER_START_DATE = "2025-11-06T00:00:00+09:00"
 
 # === 設定 ===
 CHANNEL_ID = "56495977"
 CHANNEL_NAME = "mokoutoaruotoko"
 API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_NAME}/videos"
+# 保存フォルダ設定
+COMMENTS_GITHUB = "comments_github"
+COMMENTS_LOCAL = "comments_local"
 ARCHIVE_FILE = "kick_archives.json"
-COMMENTS_DIR = "comments"
 
-# 保存ディレクトリ作成
-os.makedirs(COMMENTS_DIR, exist_ok=True)
-
+# ローカル優先
+def get_comment_dir():
+    return COMMENTS_LOCAL if os.path.exists(COMMENTS_LOCAL) else COMMENTS_GITHUB
 
 # === ユーティリティ ===
 def to_iso(dt_str):
@@ -96,6 +97,7 @@ def fetch_archives(max_retries=3):
                         "start_time": t,
                         "url": f"https://kick.com/{CHANNEL_NAME}/videos/{v.get('video', {}).get('uuid')}",
                         "duration": v.get("duration"),
+                        "video_length":format_duration(v.get("duration")),
                     })
                 return formatted
 
@@ -183,7 +185,7 @@ def get_all_comments(start_time_iso, start_time, end_time):
 
 
 def save_comment_stats(video, comments):
-    """コメント統計を保存（GitHub最適化版）"""
+    comment_dir = get_comment_dir()
     if not comments:
         print(f"コメントなし: {video['id']}")
         return
@@ -193,10 +195,12 @@ def save_comment_stats(video, comments):
         data = {
             "video_id": video["id"],
             "start_time": video["start_time"],
+            "video_length": video["video_length"],
+            "number_of_comments": video["number_of_comments"],
             "comments": comments,
         }
 
-        path = os.path.join("comments", f"{video['id']}_comments.json")
+        path = os.path.join(comment_dir, f"{video['id']}_comments.json")
         with open(path, "w", encoding="utf-8") as f:
             json.dump(data, f, ensure_ascii=False, indent=2)
 
@@ -204,6 +208,24 @@ def save_comment_stats(video, comments):
 
     except Exception as e:
         print(f"統計保存エラー({video['id']}): {e}")
+        
+# kick_archives.jsonを更新
+def update_archive_data(archives):
+    with open(ARCHIVE_FILE, "w", encoding="utf-8") as f:
+        json.dump(archives, f, ensure_ascii=False, indent=2)
+    print(f"📁 {ARCHIVE_FILE} 更新完了")
+
+# 古いコメントを削除（GitHubフォルダのみ）
+def cleanup_old_comments():
+    limit = datetime.now(timezone.utc) - timedelta(days=7)
+    for f in os.listdir(COMMENTS_GITHUB):
+        if not f.endswith("_comments.json"):
+            continue
+        path = os.path.join(COMMENTS_GITHUB, f)
+        mtime = datetime.fromtimestamp(os.path.getmtime(path), tz=timezone.utc)
+        if mtime < limit:
+            os.remove(path)
+            print(f"🧹 古いコメント削除: {f}")
 
 
 
@@ -224,21 +246,14 @@ def main():
             print(f"新しいアーカイブ: {video['title']} ({video['id']})")
             start_time_iso, start_time_dt, end_time_dt = compute_timeinfo(video)
             comments = get_all_comments(start_time_iso, start_time_dt, end_time_dt)
+            video['number_of_comments'] = len(comments)
             save_comment_stats(video, comments)
-            comment_num = len(comments)
-            video['number_of_comments'] = comment_num
             local_archives.append(video)
             time.sleep(3)
 
-        with open(ARCHIVE_FILE, "w", encoding="utf-8") as f:
-            json.dump(local_archives, f, ensure_ascii=False, indent=2)
-        print("kick_archives.json 更新完了。")
+        update_archive_data(local_archives)
         
-        RETENTION_DAYS = 7
-        for f in os.listdir("comments"):
-            path = os.path.join("comments", f)
-            if os.path.getmtime(path) < time.time() - RETENTION_DAYS * 86400:
-                os.remove(path)
+        cleanup_old_comments()
 
     except Exception as e:
         print(f"実行中エラー: {e}")

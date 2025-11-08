@@ -225,6 +225,8 @@ def main():
             start_time_iso, start_time_dt, end_time_dt = compute_timeinfo(video)
             comments = get_all_comments(start_time_iso, start_time_dt, end_time_dt)
             save_comment_stats(video, comments)
+            comment_num = len(comments)
+            video['number_of_comments'] = comment_num
             local_archives.append(video)
             time.sleep(3)
 

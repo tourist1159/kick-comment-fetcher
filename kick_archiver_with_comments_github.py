@@ -26,9 +26,13 @@ ARCHIVE_FILE = "kick_archives.json"
 os.makedirs(COMMENTS_GITHUB, exist_ok=True)
 os.makedirs(COMMENTS_LOCAL, exist_ok=True)
 
-# ローカル優先
 def get_comment_dir():
-    return COMMENTS_LOCAL if os.path.exists(COMMENTS_LOCAL) else COMMENTS_GITHUB
+    """実行環境に応じて保存フォルダを決定"""
+    # GitHub Actions 環境変数がセットされている場合 → GitHub用
+    if os.getenv("GITHUB_ACTIONS") == "true":
+        return COMMENTS_GITHUB
+    # ローカル実行なら comments_local に保存
+    return COMMENTS_LOCAL
 
 # === ユーティリティ ===
 def to_iso(dt_str):

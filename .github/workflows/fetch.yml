@@ -2,32 +2,52 @@ name: Kick Comment Auto Fetcher
 
 on:
   schedule:
-    - cron: "0 * * * *"  # 毎時0分に実行（日本時間+9時間考慮）
-  workflow_dispatch:     # 手動実行も可能
+    # 毎時0分に実行（例: JSTだと9時＝UTC 0時）
+    - cron: "0 * * * *"
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: write   # ← これが重要！pushするために必要
 
 jobs:
   fetch:
     runs-on: ubuntu-latest
+
     steps:
+      # === 1. リポジトリを取得 ===
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
           persist-credentials: true
 
+      # === 2. pipキャッシュ（pandasなどの高速化） ===
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # === 3. Python環境をセットアップ ===
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: "3.12"
 
+      # === 4. 依存関係をインストール ===
       - name: Install dependencies
-        run: pip install -r requirements.txt
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
 
+      # === 5. コメントデータ取得スクリプトを実行 ===
       - name: Run Kick archiver
+        env:
+          GITHUB_ACTIONS: "true"   # ← フォルダ分離の判定に必要！
         run: python kick_archiver_with_comments_github.py
 
+      # === 6. 古いコメントデータ削除後、コミットしてpush ===
       - name: Commit and push updates
         run: |
           git config user.name "github-actions[bot]"

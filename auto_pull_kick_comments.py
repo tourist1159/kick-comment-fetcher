@@ -3,6 +3,7 @@ import os
 import shutil
 from datetime import datetime
 from pathlib import Path
+import time
 
 # === 設定 ===
 REPO_PATH = Path(__file__).resolve().parent  # スクリプトが置かれているリポジトリのパス
@@ -63,3 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    time.sleep(5)

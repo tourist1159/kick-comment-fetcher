@@ -7,7 +7,6 @@ from urllib.error import HTTPError, URLError
 from urllib.parse import quote
 import sys
 import functools
-from pprint import pprint
 
 # すべての print() を stderr に出す
 print = functools.partial(print, file=sys.stderr, flush=True)

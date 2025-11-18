@@ -250,7 +250,6 @@ def main():
         new_archives = [a for a in remote_archives if a["id"] not in known_ids]
         if not new_archives:
             print("新しいアーカイブはありません。")
-            return
 
         for video in new_archives:
             print(f"新しいアーカイブ: {video['title']} ({video['id']})")
@@ -260,8 +259,7 @@ def main():
             save_comment_stats(video, comments)
             local_archives.append(video)
             time.sleep(3)
-
-        update_archive_data(local_archives)
+            if(video==new_archives[-1]): update_archive_data(local_archives)
         
         cleanup_old_comments()
 

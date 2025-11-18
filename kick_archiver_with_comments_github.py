@@ -223,8 +223,6 @@ def update_archive_data(archives):
 # 古いコメントを削除（GitHubフォルダのみ）
 def cleanup_old_comments():
     limit = datetime.now(timezone.utc) - timedelta(days=7)
-    print("limit:")
-    print(limit)
 
     for el in os.listdir(COMMENTS_GITHUB):
         if not el.endswith("_comments.json"):
@@ -237,9 +235,6 @@ def cleanup_old_comments():
         created = obj.get('start_time')
         if created:
             ctime = datetime.fromisoformat(created)
-            print("f, ctime:")
-            print(el)
-            print(ctime)
             if ctime < limit:
                 os.remove(path)
                 print(f"🧹 古いコメント削除: {el}")

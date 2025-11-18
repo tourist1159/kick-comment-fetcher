@@ -225,17 +225,24 @@ def cleanup_old_comments():
     limit = datetime.now(timezone.utc) - timedelta(days=7)
     print("limit:")
     print(limit)
-    for f in os.listdir(COMMENTS_GITHUB):
-        if not f.endswith("_comments.json"):
+
+    for el in os.listdir(COMMENTS_GITHUB):
+        if not el.endswith("_comments.json"):
             continue
-        path = os.path.join(COMMENTS_GITHUB, f)
-        ctime = datetime.fromtimestamp(os.path.getbirthtime(path), tz=timezone.utc)
-        print("f, ctime:")
-        print(f)
-        print(ctime)
-        if ctime < limit:
-            os.remove(path)
-            print(f"🧹 古いコメント削除: {f}")
+        
+        with open(el, "r", encoding="utf-8") as f:
+            obj = json.load(f)
+
+        created = obj.get('start_time')
+        if created:
+            ctime = datetime.fromisoformat(created)
+            print("f, ctime:")
+            print(el)
+            print(ctime)
+            if ctime < limit:
+                path = os.path.join(COMMENTS_GITHUB, el)
+                os.remove(path)
+                print(f"🧹 古いコメント削除: {f}")
 
 
 

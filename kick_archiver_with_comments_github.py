@@ -229,7 +229,7 @@ def cleanup_old_comments():
         if not f.endswith("_comments.json"):
             continue
         path = os.path.join(COMMENTS_GITHUB, f)
-        ctime = datetime.fromtimestamp(os.path.getctime(path), tz=timezone.utc)
+        ctime = datetime.fromtimestamp(os.path.getbirthtime(path), tz=timezone.utc)
         print("f, ctime:")
         print(f)
         print(ctime)

@@ -230,7 +230,8 @@ def cleanup_old_comments():
         if not el.endswith("_comments.json"):
             continue
         
-        with open(el, "r", encoding="utf-8") as f:
+        path = os.path.join(COMMENTS_GITHUB, el)        
+        with open(path, "r", encoding="utf-8") as f:
             obj = json.load(f)
 
         created = obj.get('start_time')
@@ -240,9 +241,8 @@ def cleanup_old_comments():
             print(el)
             print(ctime)
             if ctime < limit:
-                path = os.path.join(COMMENTS_GITHUB, el)
                 os.remove(path)
-                print(f"🧹 古いコメント削除: {f}")
+                print(f"🧹 古いコメント削除: {el}")
 
 
 

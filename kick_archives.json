@@ -97,5 +97,16 @@
     "duration": 8026000,
     "video_length": "02:13:46",
     "number_of_comments": 29204
+  },
+  {
+    "id": 84509156,
+    "video_id": 80284428,
+    "uuid": "20dcc6dc-b0f1-4c4e-918e-f19ad7383bce",
+    "title": "雑談",
+    "start_time": "2025-11-21T11:10:49+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/20dcc6dc-b0f1-4c4e-918e-f19ad7383bce",
+    "duration": 2204000,
+    "video_length": "00:36:44",
+    "number_of_comments": 8059
   }
 ]

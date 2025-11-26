@@ -174,5 +174,16 @@
     "duration": 1252000,
     "video_length": "00:20:52",
     "number_of_comments": 5646
+  },
+  {
+    "id": 85234414,
+    "video_id": 81008987,
+    "uuid": "474681a5-2fc2-4a9b-abcf-762139f75fce",
+    "title": "そと配信",
+    "start_time": "2025-11-26T08:14:59+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/474681a5-2fc2-4a9b-abcf-762139f75fce",
+    "duration": 9265000,
+    "video_length": "02:34:25",
+    "number_of_comments": 42832
   }
 ]

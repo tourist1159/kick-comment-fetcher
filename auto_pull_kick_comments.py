@@ -4,6 +4,7 @@ import shutil
 from datetime import datetime
 from pathlib import Path
 import time
+import schedule
 
 # === 設定 ===
 REPO_PATH = Path(__file__).resolve().parent  # スクリプトが置かれているリポジトリのパス
@@ -64,4 +65,12 @@ def main():
 
 if __name__ == "__main__":
     main()
-    time.sleep(5)
+    
+def job():
+    main()
+    
+schedule.every(1).hours.do(job)
+
+while True:
+    schedule.run_pending()
+    time.sleep(1)

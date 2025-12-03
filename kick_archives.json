@@ -284,5 +284,16 @@
     "duration": 11643000,
     "video_length": "03:14:03",
     "number_of_comments": 45225
+  },
+  {
+    "id": 86283311,
+    "video_id": 82056484,
+    "uuid": "e0bb4396-ffb1-4da8-b45f-0f2115027f2b",
+    "title": "山で大キャンプ配信",
+    "start_time": "2025-12-03T19:54:31+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/e0bb4396-ffb1-4da8-b45f-0f2115027f2b",
+    "duration": 2161000,
+    "video_length": "00:36:01",
+    "number_of_comments": 3844
   }
 ]

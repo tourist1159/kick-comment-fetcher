@@ -317,5 +317,16 @@
     "duration": 5227000,
     "video_length": "01:27:07",
     "number_of_comments": 13138
+  },
+  {
+    "id": 86621507,
+    "video_id": 82394403,
+    "uuid": "c3d9acab-d6b8-469e-bb00-a3e3a5612abd",
+    "title": "アークレイダーズ",
+    "start_time": "2025-12-06T01:33:10+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/c3d9acab-d6b8-469e-bb00-a3e3a5612abd",
+    "duration": 9075000,
+    "video_length": "02:31:15",
+    "number_of_comments": 24195
   }
 ]

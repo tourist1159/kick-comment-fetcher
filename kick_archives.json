@@ -339,5 +339,16 @@
     "duration": 1099000,
     "video_length": "00:18:19",
     "number_of_comments": 3815
+  },
+  {
+    "id": 86920897,
+    "video_id": 82693522,
+    "uuid": "0f95dae4-8c9a-407a-8ef5-8b622e6b4161",
+    "title": "今日はコラボ",
+    "start_time": "2025-12-08T03:58:24+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/0f95dae4-8c9a-407a-8ef5-8b622e6b4161",
+    "duration": 20220000,
+    "video_length": "05:37:00",
+    "number_of_comments": 42142
   }
 ]

@@ -372,5 +372,16 @@
     "duration": 5373000,
     "video_length": "01:29:33",
     "number_of_comments": 15177
+  },
+  {
+    "id": 87068416,
+    "video_id": 82840898,
+    "uuid": "59998332-3b17-4153-9fec-9b0461d828e7",
+    "title": "撮って寝るぞ",
+    "start_time": "2025-12-09T07:01:34+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/59998332-3b17-4153-9fec-9b0461d828e7",
+    "duration": 40000,
+    "video_length": "00:00:40",
+    "number_of_comments": 188
   }
 ]

@@ -438,5 +438,16 @@
     "duration": 13636000,
     "video_length": "03:47:16",
     "number_of_comments": 23704
+  },
+  {
+    "id": 87487192,
+    "video_id": 83259273,
+    "uuid": "8d9f3126-086c-4e91-8987-8510d67cf7fd",
+    "title": "ぶお",
+    "start_time": "2025-12-12T09:10:53+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/8d9f3126-086c-4e91-8987-8510d67cf7fd",
+    "duration": 116000,
+    "video_length": "00:01:56",
+    "number_of_comments": 804
   }
 ]

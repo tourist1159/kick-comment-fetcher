@@ -471,5 +471,16 @@
     "duration": 2111000,
     "video_length": "00:35:11",
     "number_of_comments": 9111
+  },
+  {
+    "id": 88026374,
+    "video_id": 83797980,
+    "uuid": "176e84ff-c75b-4a99-b78e-7777f04d4ab1",
+    "title": "ゲーム！",
+    "start_time": "2025-12-16T12:17:13+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/176e84ff-c75b-4a99-b78e-7777f04d4ab1",
+    "duration": 6283000,
+    "video_length": "01:44:43",
+    "number_of_comments": 29877
   }
 ]

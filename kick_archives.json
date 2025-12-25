@@ -570,5 +570,16 @@
     "duration": 5041000,
     "video_length": "01:24:01",
     "number_of_comments": 22521
+  },
+  {
+    "id": 89208277,
+    "video_id": 84978730,
+    "uuid": "e402dee8-3a02-426b-848a-539954a0e24d",
+    "title": "朝から仕事行く男",
+    "start_time": "2025-12-25T21:11:58+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/e402dee8-3a02-426b-848a-539954a0e24d",
+    "duration": 3409000,
+    "video_length": "00:56:49",
+    "number_of_comments": 4343
   }
 ]

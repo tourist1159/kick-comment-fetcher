@@ -559,5 +559,16 @@
     "duration": 9063000,
     "video_length": "02:31:03",
     "number_of_comments": 31488
+  },
+  {
+    "id": 89141788,
+    "video_id": 84912361,
+    "uuid": "d29aff5a-d3c0-472c-9b8d-a1340fc4a5c0",
+    "title": "クリスマスや！",
+    "start_time": "2025-12-25T05:25:28+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/d29aff5a-d3c0-472c-9b8d-a1340fc4a5c0",
+    "duration": 5041000,
+    "video_length": "01:24:01",
+    "number_of_comments": 22521
   }
 ]

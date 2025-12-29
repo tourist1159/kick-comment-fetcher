@@ -614,5 +614,16 @@
     "duration": 951000,
     "video_length": "00:15:51",
     "number_of_comments": 4878
+  },
+  {
+    "id": 89682529,
+    "video_id": 85452405,
+    "uuid": "16676403-c819-4183-a55a-5d99e29d3907",
+    "title": "疲れすぎて一日ねた漢",
+    "start_time": "2025-12-29T14:07:58+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/16676403-c819-4183-a55a-5d99e29d3907",
+    "duration": 8752000,
+    "video_length": "02:25:52",
+    "number_of_comments": 49843
   }
 ]

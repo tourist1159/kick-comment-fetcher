@@ -625,5 +625,16 @@
     "duration": 8752000,
     "video_length": "02:25:52",
     "number_of_comments": 49843
+  },
+  {
+    "id": 89946183,
+    "video_id": 85715839,
+    "uuid": "d1182a60-aafe-4f95-a9cf-783a402bda31",
+    "title": "年越しの瞬間寝てた漢",
+    "start_time": "2025-12-31T15:24:25+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/d1182a60-aafe-4f95-a9cf-783a402bda31",
+    "duration": 2665000,
+    "video_length": "00:44:25",
+    "number_of_comments": 16649
   }
 ]

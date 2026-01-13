@@ -724,5 +724,27 @@
     "duration": 5304000,
     "video_length": "01:28:24",
     "number_of_comments": 25901
+  },
+  {
+    "id": 91795675,
+    "video_id": 87533450,
+    "uuid": "c146c048-79dc-4e44-8a91-bfb8a592dcdc",
+    "title": "食中毒になりました",
+    "start_time": "2026-01-13T12:48:32+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/c146c048-79dc-4e44-8a91-bfb8a592dcdc",
+    "duration": 2430000,
+    "video_length": "00:40:30",
+    "number_of_comments": 11661
+  },
+  {
+    "id": 91791710,
+    "video_id": 87529489,
+    "uuid": "ba9dc3b5-9389-43d9-bfd6-b2cc016f7a55",
+    "title": "食中毒になりました",
+    "start_time": "2026-01-13T11:44:19+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/ba9dc3b5-9389-43d9-bfd6-b2cc016f7a55",
+    "duration": 3726000,
+    "video_length": "01:02:06",
+    "number_of_comments": 18978
   }
 ]

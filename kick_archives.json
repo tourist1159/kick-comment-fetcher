@@ -768,5 +768,16 @@
     "duration": 7294000,
     "video_length": "02:01:34",
     "number_of_comments": 31203
+  },
+  {
+    "id": 93184561,
+    "video_id": 88920329,
+    "uuid": "01ba451f-4303-43d3-98d9-43cd848fa90b",
+    "title": "視聴者を悲しませたくない",
+    "start_time": "2026-01-22T16:22:05+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01ba451f-4303-43d3-98d9-43cd848fa90b",
+    "duration": 5483000,
+    "video_length": "01:31:23",
+    "number_of_comments": 19739
   }
 ]

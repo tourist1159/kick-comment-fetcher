@@ -790,5 +790,16 @@
     "duration": 4585000,
     "video_length": "01:16:25",
     "number_of_comments": 19841
+  },
+  {
+    "id": 94083825,
+    "video_id": 89818638,
+    "uuid": "23697362-e8f8-4053-895a-e6b8e3e86522",
+    "title": "自律神経失調症男の雑談",
+    "start_time": "2026-01-28T08:25:44+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/23697362-e8f8-4053-895a-e6b8e3e86522",
+    "duration": 8640000,
+    "video_length": "02:24:00",
+    "number_of_comments": 35619
   }
 ]

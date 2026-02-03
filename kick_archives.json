@@ -856,5 +856,27 @@
     "duration": 2249000,
     "video_length": "00:37:29",
     "number_of_comments": 10574
+  },
+  {
+    "id": 94961604,
+    "video_id": 90694130,
+    "uuid": "d5ecbce5-8d8d-461d-92f4-d10344ea1184",
+    "title": "うおｗ",
+    "start_time": "2026-02-03T00:01:40+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/d5ecbce5-8d8d-461d-92f4-d10344ea1184",
+    "duration": 751000,
+    "video_length": "00:12:31",
+    "number_of_comments": 1729
+  },
+  {
+    "id": 94940391,
+    "video_id": 90672921,
+    "uuid": "de320d13-520e-4d0c-9e43-cc3b4a06dc44",
+    "title": "うおｗ",
+    "start_time": "2026-02-02T21:27:27+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/de320d13-520e-4d0c-9e43-cc3b4a06dc44",
+    "duration": 9236000,
+    "video_length": "02:33:56",
+    "number_of_comments": 12329
   }
 ]

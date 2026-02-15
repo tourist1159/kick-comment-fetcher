@@ -944,5 +944,16 @@
     "duration": 9133000,
     "video_length": "02:32:13",
     "number_of_comments": 30929
+  },
+  {
+    "id": 96838802,
+    "video_id": 92569209,
+    "uuid": "2c14cff2-512d-4187-b4d1-8db27964d146",
+    "title": "寝る前雑談",
+    "start_time": "2026-02-15T15:28:40+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/2c14cff2-512d-4187-b4d1-8db27964d146",
+    "duration": 8893000,
+    "video_length": "02:28:13",
+    "number_of_comments": 32187
   }
 ]

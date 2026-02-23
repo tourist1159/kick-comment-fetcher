@@ -1021,5 +1021,16 @@
     "duration": 6792000,
     "video_length": "01:53:12",
     "number_of_comments": 29777
+  },
+  {
+    "id": 98029999,
+    "video_id": 93759071,
+    "uuid": "bd1fc90d-bb4b-4a48-ad3d-18253b008350",
+    "title": "ラーメン食って動画撮る",
+    "start_time": "2026-02-23T17:46:55+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/bd1fc90d-bb4b-4a48-ad3d-18253b008350",
+    "duration": 3169000,
+    "video_length": "00:52:49",
+    "number_of_comments": 7849
   }
 ]

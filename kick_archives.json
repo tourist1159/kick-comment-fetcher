@@ -1131,5 +1131,16 @@
     "duration": 6842000,
     "video_length": "01:54:02",
     "number_of_comments": 46632
+  },
+  {
+    "id": 100384487,
+    "video_id": 96111528,
+    "uuid": "aa9edd35-80ca-45a8-b268-d10f8ed5514e",
+    "title": "外配信",
+    "start_time": "2026-03-12T07:37:25+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/aa9edd35-80ca-45a8-b268-d10f8ed5514e",
+    "duration": 8979000,
+    "video_length": "02:29:39",
+    "number_of_comments": 43114
   }
 ]

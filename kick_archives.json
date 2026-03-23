@@ -1230,5 +1230,16 @@
     "duration": 16410000,
     "video_length": "04:33:30",
     "number_of_comments": 31488
+  },
+  {
+    "id": 101747376,
+    "video_id": 97474157,
+    "uuid": "2520fad0-8328-4035-b862-6082e0159350",
+    "title": "なんか撮ってから寝る",
+    "start_time": "2026-03-22T14:29:35+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/2520fad0-8328-4035-b862-6082e0159350",
+    "duration": 30848000,
+    "video_length": "08:34:08",
+    "number_of_comments": 30766
   }
 ]

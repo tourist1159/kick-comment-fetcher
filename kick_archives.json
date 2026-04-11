@@ -1351,5 +1351,16 @@
     "duration": 4871000,
     "video_length": "01:21:11",
     "number_of_comments": 14456
+  },
+  {
+    "id": 104390713,
+    "video_id": 100111872,
+    "uuid": "e1eabe29-36e0-4a26-be27-6e05e31833c6",
+    "title": "メガシンカ漢",
+    "start_time": "2026-04-11T18:23:14+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/e1eabe29-36e0-4a26-be27-6e05e31833c6",
+    "duration": 2732000,
+    "video_length": "00:45:32",
+    "number_of_comments": 3707
   }
 ]

@@ -1373,5 +1373,16 @@
     "duration": 12407000,
     "video_length": "03:26:47",
     "number_of_comments": 38830
+  },
+  {
+    "id": 104888651,
+    "video_id": 100609744,
+    "uuid": "9038f404-418c-4e58-8fb1-7ef4c84fa9cf",
+    "title": "急に現実が見えてきた",
+    "start_time": "2026-04-15T16:31:22+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/9038f404-418c-4e58-8fb1-7ef4c84fa9cf",
+    "duration": 14978000,
+    "video_length": "04:09:38",
+    "number_of_comments": 26343
   }
 ]

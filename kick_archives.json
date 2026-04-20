@@ -1384,5 +1384,16 @@
     "duration": 14978000,
     "video_length": "04:09:38",
     "number_of_comments": 26343
+  },
+  {
+    "id": 105471176,
+    "video_id": 101192107,
+    "uuid": "e57d0d2b-8e52-40c6-a4ee-5ef38b8a87c7",
+    "title": "朝の漢",
+    "start_time": "2026-04-19T23:54:03+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/e57d0d2b-8e52-40c6-a4ee-5ef38b8a87c7",
+    "duration": 1660000,
+    "video_length": "00:27:40",
+    "number_of_comments": 5357
   }
 ]

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Kick Comment Viewer</title>
+  <script src="chart.js"></script>
+</head>
+<body>
+  <canvas id="chart"></canvas>
+
+  <script>
+    const videoId = new URLSearchParams(location.search).get("id");
+
+    fetch(`comments_github/${videoId}_comments.json`)
+      .then(res => res.json())
+      .then(data => {
+        // グラフ描画
+        console.log(data);
+      });
+  </script>
+</body>
+</html>

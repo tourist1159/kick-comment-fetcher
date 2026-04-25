@@ -1417,5 +1417,16 @@
     "duration": 713000,
     "video_length": "00:11:53",
     "number_of_comments": 2562
+  },
+  {
+    "id": 106123140,
+    "video_id": 101843934,
+    "uuid": "42959a92-f621-4aa3-9f3d-bc57e9e4e7e7",
+    "title": "ニコ超会議にきたぞ",
+    "start_time": "2026-04-25T03:14:02+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/42959a92-f621-4aa3-9f3d-bc57e9e4e7e7",
+    "duration": 8506000,
+    "video_length": "02:21:46",
+    "number_of_comments": 35224
   }
 ]

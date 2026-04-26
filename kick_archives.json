@@ -1428,5 +1428,16 @@
     "duration": 8506000,
     "video_length": "02:21:46",
     "number_of_comments": 35224
+  },
+  {
+    "id": 106310454,
+    "video_id": 102031215,
+    "uuid": "500341ac-6339-4833-a6c0-e4237fc87b42",
+    "title": "ニコニコ超会議に来たぞ",
+    "start_time": "2026-04-26T16:35:19+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/500341ac-6339-4833-a6c0-e4237fc87b42",
+    "duration": 7281000,
+    "video_length": "02:01:21",
+    "number_of_comments": 25759
   }
 ]

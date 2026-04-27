@@ -1439,5 +1439,16 @@
     "duration": 7281000,
     "video_length": "02:01:21",
     "number_of_comments": 25759
+  },
+  {
+    "id": 106437873,
+    "video_id": 102158605,
+    "uuid": "d8691e84-a814-46c8-8668-608984357fb5",
+    "title": "俺は冷たい人間なのか",
+    "start_time": "2026-04-27T18:02:09+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/d8691e84-a814-46c8-8668-608984357fb5",
+    "duration": 2791000,
+    "video_length": "00:46:31",
+    "number_of_comments": 5488
   }
 ]

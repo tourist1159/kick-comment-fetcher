@@ -1450,5 +1450,16 @@
     "duration": 2791000,
     "video_length": "00:46:31",
     "number_of_comments": 5488
+  },
+  {
+    "id": 106609248,
+    "video_id": 102329935,
+    "uuid": "07dcf8b4-4e6f-4928-98c9-9bfdd6928622",
+    "title": "撮ったら終わる！",
+    "start_time": "2026-04-29T00:23:24+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/07dcf8b4-4e6f-4928-98c9-9bfdd6928622",
+    "duration": 7825000,
+    "video_length": "02:10:25",
+    "number_of_comments": 14630
   }
 ]

@@ -1527,5 +1527,16 @@
     "duration": 1966000,
     "video_length": "00:32:46",
     "number_of_comments": 13972
+  },
+  {
+    "id": 108830264,
+    "video_id": 104538029,
+    "uuid": "c81c4ed9-1715-498f-a8c6-ba4ad83a5e53",
+    "title": "例の件について",
+    "start_time": "2026-05-15T17:32:59+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/c81c4ed9-1715-498f-a8c6-ba4ad83a5e53",
+    "duration": 7807000,
+    "video_length": "02:10:07",
+    "number_of_comments": 21471
   }
 ]

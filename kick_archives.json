@@ -1571,5 +1571,27 @@
     "duration": 858000,
     "video_length": "00:14:18",
     "number_of_comments": 2693
+  },
+  {
+    "id": 109264325,
+    "video_id": 104971980,
+    "uuid": "adead811-bbc3-4dc1-9a51-f408198d35c0",
+    "title": "マカオ旅行記",
+    "start_time": "2026-05-18T20:21:36+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/adead811-bbc3-4dc1-9a51-f408198d35c0",
+    "duration": 459000,
+    "video_length": "00:07:39",
+    "number_of_comments": 1149
+  },
+  {
+    "id": 109256098,
+    "video_id": 104963752,
+    "uuid": "f778cda0-54a7-40ff-8b9a-a95e68857545",
+    "title": "マカオ旅行記",
+    "start_time": "2026-05-18T19:18:55+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/f778cda0-54a7-40ff-8b9a-a95e68857545",
+    "duration": 3539000,
+    "video_length": "00:58:59",
+    "number_of_comments": 5525
   }
 ]

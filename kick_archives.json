@@ -1604,5 +1604,16 @@
     "duration": 4717000,
     "video_length": "01:18:37",
     "number_of_comments": 19933
+  },
+  {
+    "id": 109345490,
+    "video_id": 105053128,
+    "uuid": "c97ee15c-47b0-4a55-81df-98fd7f27237c",
+    "title": "マカオ旅行記",
+    "start_time": "2026-05-19T11:38:14+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/c97ee15c-47b0-4a55-81df-98fd7f27237c",
+    "duration": 8662000,
+    "video_length": "02:24:22",
+    "number_of_comments": 44231
   }
 ]

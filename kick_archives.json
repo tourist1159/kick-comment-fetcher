@@ -1681,5 +1681,16 @@
     "duration": 15930000,
     "video_length": "04:25:30",
     "number_of_comments": 16869
+  },
+  {
+    "id": 110176696,
+    "video_id": 105884134,
+    "uuid": "3579417e-1277-4ac3-8111-a9413250cfcc",
+    "title": "心を病み引きこもることを決めました",
+    "start_time": "2026-05-25T17:09:50+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/3579417e-1277-4ac3-8111-a9413250cfcc",
+    "duration": 47000,
+    "video_length": "00:00:47",
+    "number_of_comments": 10
   }
 ]

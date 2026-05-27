@@ -1,18 +1,381 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
 <head>
-  <title>Kick Comment Viewer</title>
-</head>
-<body>
-  <script>
-    const videoId = new URLSearchParams(location.search).get("id");
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    fetch(`comments_github/${videoId}_comments.json`)
-      .then(res => res.json())
-      .then(data => {
-        // グラフ描画
-        console.log(data);
-      });
-  </script>
+<title>Kick Comment Viewer</title>
+
+<style>
+body {
+  margin: 0;
+  padding: 0;
+  background: #111;
+  color: white;
+  font-family: sans-serif;
+}
+
+#topbar {
+  padding: 12px;
+  background: #1a1a1a;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+input, button {
+  padding: 8px;
+  margin: 4px;
+}
+
+#chart-container {
+  position: relative;
+  height: 75vh;
+  width: 100%;
+}
+
+canvas {
+  background: #181818;
+}
+
+.toggle-group {
+  margin-top: 8px;
+}
+
+.info {
+  padding: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+</style>
+</head>
+
+<body>
+
+<div id="topbar">
+
+  <div>
+    動画ID:
+    <input id="videoIdInput" type="text" placeholder="80869745">
+    
+    キーワード:
+    <input id="keywordInput" type="text" placeholder="w">
+
+    <button id="loadBtn">読み込み</button>
+    <button id="resetZoomBtn">ズームリセット</button>
+  </div>
+
+  <div class="toggle-group">
+    <label>
+      <input type="checkbox" id="toggleComments" checked>
+      コメント数
+    </label>
+
+    <label>
+      <input type="checkbox" id="toggleKeyword" checked>
+      キーワード
+    </label>
+  </div>
+
+</div>
+
+<div id="chart-container">
+  <canvas id="commentChart"></canvas>
+</div>
+
+<div class="info">
+  ・ドラッグで移動  
+  ・ホイール/ピンチでズーム  
+  ・グラフクリックで動画時間表示
+</div>
+
+<script src="chart.js"></script>
+<script src="hammer.min.js"></script>
+<script src="chartjs-plugin-zoom.min.js"></script>
+
+<script>
+
+const BASE_URL =
+  "https://tourist1159.github.io/kick-comment-fetcher/comments_github/";
+
+let chart = null;
+
+document.getElementById("loadBtn").addEventListener("click", loadData);
+
+document.getElementById("resetZoomBtn").addEventListener("click", () => {
+  if (chart) chart.resetZoom();
+});
+
+async function loadData() {
+
+  const videoId = document.getElementById("videoIdInput").value.trim();
+  const keyword = document.getElementById("keywordInput").value;
+
+  if (!videoId) {
+    alert("動画IDを入力してください");
+    return;
+  }
+
+  const url = `${BASE_URL}${videoId}_comments.json`;
+
+  let data;
+
+  try {
+    const res = await fetch(url);
+
+    if (!res.ok) {
+      alert("コメントJSONが見つかりません");
+      return;
+    }
+
+    data = await res.json();
+
+  } catch (e) {
+    console.error(e);
+    alert("JSON取得失敗");
+    return;
+  }
+
+  renderChart(data, keyword);
+}
+
+function countKeyword(text, keyword) {
+
+  if (!keyword) return 0;
+
+  try {
+    const regex = new RegExp(keyword, "g");
+    const matches = text.match(regex);
+    return matches ? matches.length : 0;
+  } catch {
+    return 0;
+  }
+}
+
+function renderChart(data, keyword) {
+
+  const comments = data.comments || [];
+
+  if (!comments.length) {
+    alert("コメントデータなし");
+    return;
+  }
+
+  const startTime = new Date(comments[0].timestamp);
+
+  const minuteMap = {};
+
+  for (const c of comments) {
+
+    const t = new Date(c.timestamp);
+
+    const minute =
+      Math.floor((t - startTime) / 1000 / 60);
+
+    if (!minuteMap[minute]) {
+      minuteMap[minute] = {
+        comments: 0,
+        keyword: 0
+      };
+    }
+
+    minuteMap[minute].comments++;
+
+    minuteMap[minute].keyword +=
+      countKeyword(c.text || "", keyword);
+  }
+
+  const maxMinute =
+    Math.max(...Object.keys(minuteMap).map(Number));
+
+  const labels = [];
+  const commentCounts = [];
+  const keywordCounts = [];
+
+  for (let i = 0; i <= maxMinute; i++) {
+
+    const d = minuteMap[i] || {
+      comments: 0,
+      keyword: 0
+    };
+
+    labels.push(i);
+
+    commentCounts.push(d.comments);
+    keywordCounts.push(d.keyword);
+  }
+
+  const ctx =
+    document.getElementById("commentChart");
+
+  if (chart) chart.destroy();
+
+  chart = new Chart(ctx, {
+    type: "line",
+
+    data: {
+      labels,
+
+      datasets: [
+
+        {
+          label: "コメント数",
+          data: commentCounts,
+          borderWidth: 2,
+          pointRadius: 0,
+          yAxisID: "y",
+          hidden:
+            !document.getElementById("toggleComments").checked
+        },
+
+        {
+          label: `キーワード(${keyword})`,
+          data: keywordCounts,
+          borderWidth: 2,
+          pointRadius: 0,
+          yAxisID: "y1",
+          hidden:
+            !document.getElementById("toggleKeyword").checked
+        }
+      ]
+    },
+
+    options: {
+
+      responsive: true,
+      maintainAspectRatio: false,
+
+      interaction: {
+        mode: "index",
+        intersect: false
+      },
+
+      scales: {
+
+        x: {
+          title: {
+            display: true,
+            text: "配信開始からの経過時間（分）"
+          }
+        },
+
+        y: {
+          type: "linear",
+          position: "left",
+
+          title: {
+            display: true,
+            text: "コメント数"
+          }
+        },
+
+        y1: {
+          type: "linear",
+          position: "right",
+
+          grid: {
+            drawOnChartArea: false
+          },
+
+          title: {
+            display: true,
+            text: "キーワード数"
+          }
+        }
+      },
+
+      plugins: {
+
+        legend: {
+          display: true
+        },
+
+        zoom: {
+
+          pan: {
+            enabled: true,
+            mode: "x"
+          },
+
+          zoom: {
+
+            wheel: {
+              enabled: true
+            },
+
+            pinch: {
+              enabled: true
+            },
+
+            mode: "x"
+          }
+        }
+      },
+
+      onClick(evt, elements) {
+
+        if (!elements.length) return;
+
+        const idx = elements[0].index;
+
+        const sec = idx * 60;
+
+        const h =
+          String(Math.floor(sec / 3600)).padStart(2, "0");
+
+        const m =
+          String(Math.floor(sec % 3600 / 60)).padStart(2, "0");
+
+        const s =
+          String(sec % 60).padStart(2, "0");
+
+        alert(`動画時間: ${h}:${m}:${s}`);
+      }
+    }
+  });
+}
+
+document.getElementById("toggleComments")
+  .addEventListener("change", () => {
+
+    if (!chart) return;
+
+    chart.data.datasets[0].hidden =
+      !event.target.checked;
+
+    chart.update();
+});
+
+document.getElementById("toggleKeyword")
+  .addEventListener("change", () => {
+
+    if (!chart) return;
+
+    chart.data.datasets[1].hidden =
+      !event.target.checked;
+
+    chart.update();
+});
+
+// URLパラメータ対応
+const params = new URLSearchParams(location.search);
+
+const videoId = params.get("id");
+const keyword = params.get("keyword");
+
+if (videoId) {
+  document.getElementById("videoIdInput").value = videoId;
+}
+
+if (keyword) {
+  document.getElementById("keywordInput").value = keyword;
+}
+
+if (videoId) {
+  loadData();
+}
+
+</script>
+
 </body>
 </html>

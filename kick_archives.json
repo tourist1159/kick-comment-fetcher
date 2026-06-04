@@ -1736,5 +1736,16 @@
     "duration": 13796000,
     "video_length": "03:49:56",
     "number_of_comments": 33496
+  },
+  {
+    "id": 111568401,
+    "video_id": 107275362,
+    "uuid": "45a336e5-cb9e-4db2-8f97-eca248ab57f7",
+    "title": "漢の放送",
+    "start_time": "2026-06-04T20:27:14+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/45a336e5-cb9e-4db2-8f97-eca248ab57f7",
+    "duration": 6764000,
+    "video_length": "01:52:44",
+    "number_of_comments": 4626
   }
 ]

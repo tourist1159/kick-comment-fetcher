@@ -1758,5 +1758,27 @@
     "duration": 23130000,
     "video_length": "06:25:30",
     "number_of_comments": 50363
+  },
+  {
+    "id": 112497620,
+    "video_id": 108204006,
+    "uuid": "73833b58-be40-42eb-a3e0-ef50ec8ec2ff",
+    "title": "ぶらり旅",
+    "start_time": "2026-06-11T06:10:20+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/73833b58-be40-42eb-a3e0-ef50ec8ec2ff",
+    "duration": 7209000,
+    "video_length": "02:00:09",
+    "number_of_comments": 18979
+  },
+  {
+    "id": 112496267,
+    "video_id": 108202654,
+    "uuid": "fcf3fcca-21e8-4cfb-a5fe-c1b792f0b685",
+    "title": "ぶらり旅",
+    "start_time": "2026-06-11T05:46:11+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/fcf3fcca-21e8-4cfb-a5fe-c1b792f0b685",
+    "duration": 1262000,
+    "video_length": "00:21:02",
+    "number_of_comments": 4608
   }
 ]

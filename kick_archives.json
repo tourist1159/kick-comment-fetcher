@@ -1879,5 +1879,16 @@
     "duration": 2879000,
     "video_length": "00:47:59",
     "number_of_comments": 10654
+  },
+  {
+    "id": 114273884,
+    "video_id": 109979167,
+    "uuid": "b89d0f5f-f5ea-44d5-b94f-abbeb243ea83",
+    "title": "僕は自律神経が壊れています",
+    "start_time": "2026-06-23T15:05:50+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/b89d0f5f-f5ea-44d5-b94f-abbeb243ea83",
+    "duration": 13186000,
+    "video_length": "03:39:46",
+    "number_of_comments": 24401
   }
 ]

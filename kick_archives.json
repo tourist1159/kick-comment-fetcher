@@ -1912,5 +1912,16 @@
     "duration": 4244000,
     "video_length": "01:10:44",
     "number_of_comments": 12968
+  },
+  {
+    "id": 114703320,
+    "video_id": 110408043,
+    "uuid": "a3010191-5102-4a83-b3de-84a1884cc7f9",
+    "title": "気圧で倒れそうな男",
+    "start_time": "2026-06-26T12:26:57+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/a3010191-5102-4a83-b3de-84a1884cc7f9",
+    "duration": 15730000,
+    "video_length": "04:22:10",
+    "number_of_comments": 22590
   }
 ]

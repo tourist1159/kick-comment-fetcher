@@ -1956,5 +1956,16 @@
     "duration": 9441000,
     "video_length": "02:37:21",
     "number_of_comments": 8498
+  },
+  {
+    "id": 115472665,
+    "video_id": 111176937,
+    "uuid": "4278b922-60d4-4a77-a079-0399f6d8e283",
+    "title": "雑談からの撮影",
+    "start_time": "2026-07-01T14:30:50+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/4278b922-60d4-4a77-a079-0399f6d8e283",
+    "duration": 21603000,
+    "video_length": "06:00:03",
+    "number_of_comments": 22133
   }
 ]

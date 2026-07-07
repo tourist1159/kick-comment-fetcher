@@ -1967,5 +1967,16 @@
     "duration": 21603000,
     "video_length": "06:00:03",
     "number_of_comments": 22133
+  },
+  {
+    "id": 116240341,
+    "video_id": 111944171,
+    "uuid": "966c255b-ce2f-47a1-b134-33ae7a750c17",
+    "title": "ごめんね、おら、もう",
+    "start_time": "2026-07-06T16:56:39+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/966c255b-ce2f-47a1-b134-33ae7a750c17",
+    "duration": 24120000,
+    "video_length": "06:42:00",
+    "number_of_comments": 34088
   }
 ]

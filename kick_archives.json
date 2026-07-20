@@ -2033,5 +2033,16 @@
     "duration": 20199000,
     "video_length": "05:36:39",
     "number_of_comments": 41389
+  },
+  {
+    "id": 118298563,
+    "video_id": 114000395,
+    "uuid": "95409f19-e1fd-4690-8a03-c05d6d322852",
+    "title": "ハイゲについて",
+    "start_time": "2026-07-20T15:40:14+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/95409f19-e1fd-4690-8a03-c05d6d322852",
+    "duration": 7647000,
+    "video_length": "02:07:27",
+    "number_of_comments": 35482
   }
 ]

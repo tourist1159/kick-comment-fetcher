@@ -2088,5 +2088,16 @@
     "duration": 5557000,
     "video_length": "01:32:37",
     "number_of_comments": 10441
+  },
+  {
+    "id": 120011745,
+    "video_id": 115712656,
+    "uuid": "327e7a92-984b-456e-b64f-815c9dd3b503",
+    "title": "昏き底より出でる",
+    "start_time": "2026-07-31T15:46:14+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/327e7a92-984b-456e-b64f-815c9dd3b503",
+    "duration": 12964000,
+    "video_length": "03:36:04",
+    "number_of_comments": 42423
   }
 ]

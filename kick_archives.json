@@ -2198,5 +2198,16 @@
     "duration": 10838000,
     "video_length": "03:00:38",
     "number_of_comments": 27492
+  },
+  {
+    "id": 122382240,
+    "video_id": 118081816,
+    "uuid": "5fcd66c7-d0fd-450e-aa39-32d0b2c36f5b",
+    "title": "雑談して寝る",
+    "start_time": "2026-08-15T13:49:15+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/5fcd66c7-d0fd-450e-aa39-32d0b2c36f5b",
+    "duration": 6421000,
+    "video_length": "01:47:01",
+    "number_of_comments": 33500
   }
 ]

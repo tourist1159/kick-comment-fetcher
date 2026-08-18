@@ -1,5 +1,6 @@
 import json
 import os
+import re
 import time
 from datetime import datetime, timedelta, timezone
 from urllib.request import Request, urlopen
@@ -18,6 +19,8 @@ USER_START_DATE = "2025-11-06T00:00:00+09:00"
 CHANNEL_ID = "56495977"
 CHANNEL_NAME = "mokoutoaruotoko"
 API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_NAME}/videos"
+# 動画一覧ページ (v7 uuid の取得元。下の fetch_v7_map を参照)
+VIDEOS_PAGE_URL = f"https://kick.com/{CHANNEL_NAME}/videos"
 # 保存フォルダ設定
 COMMENTS_GITHUB = "comments_github"
 COMMENTS_LOCAL = "comments_local"
@@ -63,8 +66,110 @@ def compute_timeinfo(video):
     return start_time_iso, start_time_dt, end_time_dt
 
 
+# === v7 uuid の解決 ===
+# Kick は動画ページURLの識別子を v4 uuid から v7 uuid へ移行したが、レガシーAPI(API_URL)は
+# 今も v4 の video.uuid しか返さない。v4 のURLは現在 404 になるため、そのまま保存すると
+# リンク切れになる。v7 の先頭48bitは start_time(ms) だが残りは乱数なので計算では復元できない。
+# そこで動画一覧ページに埋め込まれたSSRデータ(v7を "id" として持つ)から
+# start_time -> v7 uuid の対応表を作り、URL生成時に差し替える。
+V7_ID_RE = re.compile(r'"id":"([0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12})"')
+START_TIME_RE = re.compile(r'"start_time":"([^"]+)"')
+
+
+def to_epoch(dt_str):
+    """ISO文字列を epoch 秒(int)に変換。失敗時は None。"""
+    if not dt_str:
+        return None
+    try:
+        s = dt_str.replace(" ", "T")
+        if s.endswith("Z"):
+            s = s[:-1] + "+00:00"
+        dt = datetime.fromisoformat(s)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return int(dt.timestamp())
+    except Exception:
+        return None
+
+
+def fetch_v7_map():
+    """動画一覧ページから {start_time(epoch秒): v7 uuid} を取得する。
+
+    取得や解析に失敗した場合は空 dict を返す。呼び出し側は従来通り v4 uuid を使うため、
+    (リンクは直らないが) 収集処理自体は止まらない。
+    """
+    headers = {
+        "User-Agent": (
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+            "AppleWebKit/537.36 (KHTML, like Gecko) "
+            "Chrome/123.0.0.0 Safari/537.36"
+        ),
+        "Accept": "text/html,application/xhtml+xml",
+        "Referer": "https://kick.com/",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    try:
+        req = Request(VIDEOS_PAGE_URL, headers=headers)
+        with urlopen(req, timeout=25) as res:
+            html = res.read().decode("utf-8", "replace")
+    except Exception as e:
+        print(f"v7対応表の取得に失敗（従来のuuidを使用）: {e}")
+        return {}
+
+    # RSCペイロード内のJSONはエスケープされて埋め込まれている
+    text = html.replace('\\"', '"')
+    v7_map = {}
+    for m in V7_ID_RE.finditer(text):
+        # キーはアルファベット順で並ぶため start_time は id の後方にある
+        window = text[m.end():m.end() + 2500]
+        s = START_TIME_RE.search(window)
+        if not s:
+            continue
+        key = to_epoch(s.group(1))
+        if key is not None:
+            v7_map.setdefault(key, m.group(1))
+
+    print(f"v7 uuid 対応表: {len(v7_map)} 件取得")
+    return v7_map
+
+
+def resolve_uuid(v7_map, start_time_iso, fallback=None):
+    """start_time から v7 uuid を引く。見つからなければ fallback を返す。"""
+    key = to_epoch(start_time_iso)
+    if key is None:
+        return fallback
+    for k in (key, key - 1, key + 1):  # 秒の丸め差を許容
+        if k in v7_map:
+            return v7_map[k]
+    return fallback
+
+
+def build_video_url(uuid):
+    return f"https://kick.com/{CHANNEL_NAME}/videos/{uuid}"
+
+
+def backfill_urls(archives, v7_map):
+    """既存エントリのURLを v7 uuid に貼り替える。
+
+    Kick は一定期間で古い動画を削除する(=一覧に出ない)ため、対応表に無いものは
+    そもそも視聴可能なURLが存在しない。その場合は変更しない。
+    """
+    fixed = 0
+    for a in archives:
+        new_uuid = resolve_uuid(v7_map, a.get("start_time"))
+        if not new_uuid:
+            continue
+        new_url = build_video_url(new_uuid)
+        if a.get("url") != new_url:
+            a["url"] = new_url
+            fixed += 1
+    if fixed:
+        print(f"🔧 既存エントリのURLを v7 に修正: {fixed} 件")
+    return fixed
+
+
 # === アーカイブ取得 ===
-def fetch_archives(max_retries=3):
+def fetch_archives(v7_map=None, max_retries=3):
     headers = {
         "User-Agent": (
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
@@ -76,6 +181,8 @@ def fetch_archives(max_retries=3):
         "Accept-Language": "en-US,en;q=0.9",
         "Connection": "keep-alive",
     }
+
+    v7_map = v7_map or {}
 
     for attempt in range(max_retries):
         try:
@@ -94,13 +201,15 @@ def fetch_archives(max_retries=3):
                     t = to_iso(v.get("start_time"))
                     # 指定日時以降のアーカイブのみ対象
                     if datetime.fromisoformat(t) < user_start_dt: continue
+                    # URLには v7 uuid を使う (無ければ従来の v4 にフォールバック)
+                    uuid_v4 = v.get("video", {}).get("uuid")
                     formatted.append({
                         "id": v.get("id"),
                         "video_id": v.get("video", {}).get("id"),
-                        "uuid": v.get("video", {}).get("uuid"),
+                        "uuid": uuid_v4,
                         "title": v.get("session_title") or "",
                         "start_time": t,
-                        "url": f"https://kick.com/{CHANNEL_NAME}/videos/{v.get('video', {}).get('uuid')}",
+                        "url": build_video_url(resolve_uuid(v7_map, t, uuid_v4)),
                         "duration": v.get("duration"),
                         "video_length":format_duration(v.get("duration")),
                     })
@@ -247,7 +356,8 @@ def main():
         print("Fetching archive list...")
         local_archives = load_local_archives()
         known_ids = {a["id"] for a in local_archives}
-        remote_archives = fetch_archives()    
+        v7_map = fetch_v7_map()
+        remote_archives = fetch_archives(v7_map)
 
         new_archives = [a for a in remote_archives if a["id"] not in known_ids]
         if not new_archives:
@@ -262,7 +372,11 @@ def main():
             local_archives.append(video)
             time.sleep(3)
             if(video==new_archives[-1]): update_archive_data(local_archives)
-        
+
+        # 既存エントリのURLを v4 → v7 に貼り替える (視聴可能な動画のみ)
+        if backfill_urls(local_archives, v7_map):
+            update_archive_data(local_archives)
+
         cleanup_old_comments()
 
     except Exception as e:

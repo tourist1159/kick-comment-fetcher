@@ -168,6 +168,24 @@ def backfill_urls(archives, v7_map):
     return fixed
 
 
+def backfill_thumbnails(archives, remote_archives):
+    """既存エントリにサムネイルURLを補完する。
+
+    削除された動画はAPI一覧に出ないためサムネも取得できない。
+    その場合は補完せず、まとめサイト側でプレースホルダー表示のままになる。
+    """
+    thumbs = {r["id"]: r["thumbnail"] for r in remote_archives if r.get("thumbnail")}
+    fixed = 0
+    for a in archives:
+        t = thumbs.get(a.get("id"))
+        if t and a.get("thumbnail") != t:
+            a["thumbnail"] = t
+            fixed += 1
+    if fixed:
+        print(f"🖼️ サムネイルを補完: {fixed} 件")
+    return fixed
+
+
 def mark_availability(archives, v7_map):
     """各エントリに available (Kick上に動画が残っているか) を付与する。
 
@@ -247,6 +265,7 @@ def fetch_archives(v7_map=None, max_retries=3):
                         "duration": v.get("duration"),
                         "video_length":format_duration(v.get("duration")),
                         "available": True,  # 一覧に載っている = 視聴可能
+                        "thumbnail": (v.get("thumbnail") or {}).get("src"),
                     })
                 return formatted
 
@@ -411,6 +430,7 @@ def main():
         # 既存エントリのURLを v4 → v7 に貼り替え、視聴可否フラグを更新する
         touched = backfill_urls(local_archives, v7_map)
         touched += mark_availability(local_archives, v7_map)
+        touched += backfill_thumbnails(local_archives, remote_archives)
         if touched:
             update_archive_data(local_archives)
 

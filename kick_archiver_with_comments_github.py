@@ -168,6 +168,40 @@ def backfill_urls(archives, v7_map):
     return fixed
 
 
+def mark_availability(archives, v7_map):
+    """各エントリに available (Kick上に動画が残っているか) を付与する。
+
+    Kick は一定期間で古いVODを削除するため、一覧に無い動画はもう視聴できない
+    (URLをどう組み立ててもリンク切れになる)。まとめサイト側はこのフラグを見て
+    リンクを無効化し「削除済み」と表示する。
+
+    誤判定を避けるためのガード:
+      - 対応表が空(一覧の取得失敗)なら何もしない。全件を削除済みにしてしまわないため。
+      - 対応表の最古より新しいのに一覧に無いものは判定を保留する。取りこぼし対策。
+    """
+    if not v7_map:
+        return 0
+
+    oldest = min(v7_map)
+    changed = 0
+    for a in archives:
+        if resolve_uuid(v7_map, a.get("start_time")):
+            value = True
+        else:
+            ts = to_epoch(a.get("start_time"))
+            if ts is None or ts >= oldest:
+                continue  # 判定保留
+            value = False  # 保持期間より古い = 確実に削除済み
+        if a.get("available") != value:
+            a["available"] = value
+            changed += 1
+
+    if changed:
+        gone = sum(1 for a in archives if a.get("available") is False)
+        print(f"🏷️ available を更新: {changed} 件 (削除済み合計 {gone} 件)")
+    return changed
+
+
 # === アーカイブ取得 ===
 def fetch_archives(v7_map=None, max_retries=3):
     headers = {
@@ -212,6 +246,7 @@ def fetch_archives(v7_map=None, max_retries=3):
                         "url": build_video_url(resolve_uuid(v7_map, t, uuid_v4)),
                         "duration": v.get("duration"),
                         "video_length":format_duration(v.get("duration")),
+                        "available": True,  # 一覧に載っている = 視聴可能
                     })
                 return formatted
 
@@ -373,8 +408,10 @@ def main():
             time.sleep(3)
             if(video==new_archives[-1]): update_archive_data(local_archives)
 
-        # 既存エントリのURLを v4 → v7 に貼り替える (視聴可能な動画のみ)
-        if backfill_urls(local_archives, v7_map):
+        # 既存エントリのURLを v4 → v7 に貼り替え、視聴可否フラグを更新する
+        touched = backfill_urls(local_archives, v7_map)
+        touched += mark_availability(local_archives, v7_map)
+        if touched:
             update_archive_data(local_archives)
 
         cleanup_old_comments()

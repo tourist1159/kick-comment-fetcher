@@ -2504,5 +2504,18 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/vmS8svBNPF9n/720.webp",
     "number_of_comments": 14070
+  },
+  {
+    "id": 123204853,
+    "video_id": 118904353,
+    "uuid": "695d16d8-e4df-4319-bef2-30d472ff6708",
+    "title": "朝に筋トレしたらあかん",
+    "start_time": "2026-08-20T16:24:49+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a01ffd-4c68-7f15-9769-788aafd90c07",
+    "duration": 12393000,
+    "video_length": "03:26:33",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/CsSsbT2A2fC6/720.webp",
+    "number_of_comments": 21564
   }
 ]

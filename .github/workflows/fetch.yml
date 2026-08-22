@@ -41,17 +41,31 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      # === 5. コメントデータ取得スクリプトを実行 ===
-      - name: Run Kick archiver
+      # === 5. メタ情報だけ先に取得・push (コメント集計を待たずにタイムラインに反映) ===
+      - name: Run Kick meta fetcher
+        run: python kick_meta_fetch.py
+
+      - name: Commit and push meta updates
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add kick_archives.json
+          git commit -m "Update Kick archive metadata [skip ci]" || echo "No changes"
+          git pull --rebase
+          git push
+
+      # === 6. 未処理(number_of_comments無し)のアーカイブのコメントを取得 ===
+      - name: Run Kick comment fetcher
         env:
           GITHUB_ACTIONS: "true"   # ← フォルダ分離の判定に必要！
-        run: python kick_archiver_with_comments_github.py
+        run: python kick_comment_fetch.py
 
-      # === 6. 古いコメントデータ削除後、コミットしてpush ===
-      - name: Commit and push updates
+      # === 7. 古いコメントデータ削除後、コミットしてpush ===
+      - name: Commit and push comment updates
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
-          git commit -m "Update archives and comments [skip ci]" || echo "No changes"
+          git commit -m "Update Kick comments [skip ci]" || echo "No changes"
+          git pull --rebase
           git push

@@ -1,49 +1,40 @@
+"""
+Kick (mokoutoaruotoko) のアーカイブ一覧をメタ情報だけ先に取得・push する。
+コメント(チャット)は別スクリプト kick_comment_fetch.py が後追いで処理する。
+
+YouTube 版 (meta-fetch.yml / youtube_archiver_with_comments_github.py) と同じ二段構え:
+新しいアーカイブが見つかったら number_of_comments を付けずに書き出す(=「未処理」の目印)。
+こうすることでコメント集計を待たずにタイムライン側にタイトル・サムネ・日時が先に出る。
+"""
+
 import json
 import os
 import re
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
 from urllib.request import Request, urlopen
 from urllib.error import HTTPError, URLError
-from urllib.parse import quote
 import sys
 import functools
 
-# すべての print() を stderr に出す
 print = functools.partial(print, file=sys.stderr, flush=True)
 
-# === ユーザーが指定する基準日時（ここを変更してください） ===
 USER_START_DATE = "2025-11-06T00:00:00+09:00"
 
-# === 設定 ===
-CHANNEL_ID = "56495977"
 CHANNEL_NAME = "mokoutoaruotoko"
 API_URL = f"https://kick.com/api/v2/channels/{CHANNEL_NAME}/videos"
-# 動画一覧ページ (v7 uuid の取得元。下の fetch_v7_map を参照)
 VIDEOS_PAGE_URL = f"https://kick.com/{CHANNEL_NAME}/videos"
-# 保存フォルダ設定
-COMMENTS_GITHUB = "comments_github"
-COMMENTS_LOCAL = "comments_local"
 ARCHIVE_FILE = "kick_archives.json"
-os.makedirs(COMMENTS_GITHUB, exist_ok=True)
-os.makedirs(COMMENTS_LOCAL, exist_ok=True)
 
-def get_comment_dir():
-    """実行環境に応じて保存フォルダを決定"""
-    # GitHub Actions 環境変数がセットされている場合 → GitHub用
-    if os.getenv("GITHUB_ACTIONS") == "true":
-        return COMMENTS_GITHUB
-    # ローカル実行なら comments_local に保存
-    return COMMENTS_LOCAL
 
-# === ユーティリティ ===
 def to_iso(dt_str):
     """Kickのcreated_atをISO形式に統一"""
     if not dt_str:
         return None
     try:
         newdt = dt_str.replace(" ", "T")
-        if (not "Z" in newdt ): newdt = newdt+"Z"
+        if "Z" not in newdt:
+            newdt = newdt + "Z"
         return datetime.fromisoformat(newdt).isoformat()
     except Exception:
         return None
@@ -56,14 +47,6 @@ def format_duration(ms):
         return time.strftime("%H:%M:%S", time.gmtime(s))
     except Exception:
         return "00:00:00"
-    
-    
-def compute_timeinfo(video):
-    start_time_iso = video["start_time"]
-    start_time_dt = datetime.fromisoformat(start_time_iso)
-    duration = video["duration"]
-    end_time_dt = start_time_dt + timedelta(milliseconds=duration)
-    return start_time_iso, start_time_dt, end_time_dt
 
 
 # === v7 uuid の解決 ===
@@ -246,14 +229,13 @@ def fetch_archives(v7_map=None, max_retries=3):
                 raw = response.read().decode("utf-8")
                 data = json.loads(raw)
                 formatted = []
-                # ユーザーが指定した基準日時を UTC に変換        
-                user_start_dt = datetime.fromisoformat(USER_START_DATE).astimezone(timezone.utc)    
+                user_start_dt = datetime.fromisoformat(USER_START_DATE).astimezone(timezone.utc)
                 for v in data:
-                    if v.get("is_live"): continue
+                    if v.get("is_live"):
+                        continue
                     t = to_iso(v.get("start_time"))
-                    # 指定日時以降のアーカイブのみ対象
-                    if datetime.fromisoformat(t) < user_start_dt: continue
-                    # URLには v7 uuid を使う (無ければ従来の v4 にフォールバック)
+                    if datetime.fromisoformat(t) < user_start_dt:
+                        continue
                     uuid_v4 = v.get("video", {}).get("uuid")
                     formatted.append({
                         "id": v.get("id"),
@@ -263,7 +245,7 @@ def fetch_archives(v7_map=None, max_retries=3):
                         "start_time": t,
                         "url": build_video_url(resolve_uuid(v7_map, t, uuid_v4)),
                         "duration": v.get("duration"),
-                        "video_length":format_duration(v.get("duration")),
+                        "video_length": format_duration(v.get("duration")),
                         "available": True,  # 一覧に載っている = 視聴可能
                         "thumbnail": (v.get("thumbnail") or {}).get("src"),
                     })
@@ -282,129 +264,20 @@ def fetch_archives(v7_map=None, max_retries=3):
     print("Kick APIアクセスに失敗しました。")
     return []
 
-# ---------- ローカル保存管理 ----------
+
 def load_local_archives():
     if os.path.exists(ARCHIVE_FILE):
         with open(ARCHIVE_FILE, "r", encoding="utf-8") as f:
             return json.load(f)
     return []
 
-# === コメント取得 ===
-def get_chat_messages(start_time_iso):
-    """指定時刻以降のコメントを取得"""
-    start_time_encoded = quote(start_time_iso, safe="")
-    headers = {
-        "User-Agent": (
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
-            "AppleWebKit/537.36 (KHTML, like Gecko) "
-            "Chrome/123.0.0.0 Safari/537.36"
-        ),
-        "Accept": "application/json, text/plain, */*",
-        "Referer": "https://kick.com/",
-        "Accept-Language": "en-US,en;q=0.9",
-        "Connection": "keep-alive",
-    }
-    url = f"https://kick.com/api/v2/channels/{CHANNEL_ID}/messages?start_time={start_time_encoded}"
 
-    try:
-        req = Request(url, headers=headers)
-        with urlopen(req, timeout=15) as res:
-            data = json.loads(res.read().decode("utf-8"))
-            msg = data.get("data", {}).get("messages", [])
-            return msg
-    except HTTPError as e:
-        print(f"HTTPエラー: {e.code} {url}")
-    except URLError as e:
-        print(f"URLエラー: {e.reason}")
-    except Exception as e:
-        print(f"コメント取得エラー: {e}")
-    return []
-
-
-def get_all_comments(start_time_iso, start_time, end_time):
-    """配信全体のコメントを取得"""
-    all_comments = []
-    current = start_time
-    current_iso = start_time_iso
-
-    while current < end_time:
-        print(f"取得中: {current}/{end_time}")
-        messages = get_chat_messages(current_iso)
-        if not messages:
-            current += timedelta(seconds=5)
-            current_iso = current.isoformat()
-            time.sleep(1)
-            continue
-
-        for msg in messages:
-            id=msg['user_id']
-            t=msg.get('created_at')
-            c=msg.get('content') or ''
-            all_comments.append({"id": id, "timestamp": t, "text": c})
-            
-        last_time = messages[-1].get("created_at")
-        if not last_time:
-            break
-        current = datetime.fromisoformat(last_time) + timedelta(seconds=1)
-        current_iso = current.isoformat()
-        time.sleep(1)
-
-    return all_comments
-
-
-def save_comment_stats(video, comments):
-    comment_dir = get_comment_dir()
-    if not comments:
-        print(f"コメントなし: {video['id']}")
-        return
-
-    try:
-
-        data = {
-            "video_id": video["id"],
-            "start_time": video["start_time"],
-            "video_length": video["video_length"],
-            "number_of_comments": video["number_of_comments"],
-            "comments": comments,
-        }
-
-        path = os.path.join(comment_dir, f"{video['id']}_comments.json")
-        with open(path, "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=2)
-
-        print(f"コメント統計保存: {path}")
-
-    except Exception as e:
-        print(f"統計保存エラー({video['id']}): {e}")
-        
-# kick_archives.jsonを更新
 def update_archive_data(archives):
     with open(ARCHIVE_FILE, "w", encoding="utf-8") as f:
         json.dump(archives, f, ensure_ascii=False, indent=2)
     print(f"📁 {ARCHIVE_FILE} 更新完了")
 
-# 古いコメントを削除（GitHubフォルダのみ）
-def cleanup_old_comments():
-    limit = datetime.now(timezone.utc) - timedelta(days=30)
 
-    for el in os.listdir(COMMENTS_GITHUB):
-        if not el.endswith("_comments.json"):
-            continue
-        
-        path = os.path.join(COMMENTS_GITHUB, el)        
-        with open(path, "r", encoding="utf-8") as f:
-            obj = json.load(f)
-
-        created = obj.get('start_time')
-        if created:
-            ctime = datetime.fromisoformat(created)
-            if ctime < limit:
-                os.remove(path)
-                print(f"🧹 古いコメント削除: {el}")
-
-
-
-# === メイン ===
 def main():
     try:
         print("Fetching archive list...")
@@ -414,27 +287,20 @@ def main():
         remote_archives = fetch_archives(v7_map)
 
         new_archives = [a for a in remote_archives if a["id"] not in known_ids]
-        if not new_archives:
+        if new_archives:
+            for video in new_archives:
+                print(f"新しいアーカイブ(メタのみ): {video['title']} ({video['id']})")
+                # number_of_comments を付けない = kick_comment_fetch.py の未処理判定に使われる
+                local_archives.append(video)
+        else:
             print("新しいアーカイブはありません。")
 
-        for video in new_archives:
-            print(f"新しいアーカイブ: {video['title']} ({video['id']})")
-            start_time_iso, start_time_dt, end_time_dt = compute_timeinfo(video)
-            comments = get_all_comments(start_time_iso, start_time_dt, end_time_dt)
-            video['number_of_comments'] = len(comments)
-            save_comment_stats(video, comments)
-            local_archives.append(video)
-            time.sleep(3)
-            if(video==new_archives[-1]): update_archive_data(local_archives)
-
-        # 既存エントリのURLを v4 → v7 に貼り替え、視聴可否フラグを更新する
         touched = backfill_urls(local_archives, v7_map)
         touched += mark_availability(local_archives, v7_map)
         touched += backfill_thumbnails(local_archives, remote_archives)
-        if touched:
-            update_archive_data(local_archives)
 
-        cleanup_old_comments()
+        if new_archives or touched:
+            update_archive_data(local_archives)
 
     except Exception as e:
         print(f"実行中エラー: {e}")

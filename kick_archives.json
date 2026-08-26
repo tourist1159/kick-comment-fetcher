@@ -2543,5 +2543,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/bOO1RYFUMNU4/720.webp",
     "number_of_comments": 35622
+  },
+  {
+    "id": 124140815,
+    "video_id": 119840223,
+    "uuid": "9007ef6f-d0c2-496a-a19f-68e35c9b4aec",
+    "title": "病み上がりで撮る",
+    "start_time": "2026-08-26T11:19:17+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a03dcb-bb08-72e0-bebf-5664a0e1624b",
+    "duration": 25260000,
+    "video_length": "07:01:00",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/6kjKFLxvL3if/720.webp?versionId=0QH_.PNsH7Bd50rdqjPYisHLDTh6CeK4"
   }
 ]

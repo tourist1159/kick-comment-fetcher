@@ -2569,5 +2569,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/MArXeWY6gqOH/720.webp",
     "number_of_comments": 19603
+  },
+  {
+    "id": 124792488,
+    "video_id": 120491832,
+    "uuid": "f12b3aa4-5fb3-4e3b-9740-7b959839d1e3",
+    "title": "動画撮る",
+    "start_time": "2026-08-30T08:29:32+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a051c9-c1e0-79fc-8ac2-4b9960a05959",
+    "duration": 14861000,
+    "video_length": "04:07:41",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/SDSOzSvPuKBz/720.webp?versionId=nVAhSzL7cdy.i73DUaHRkIz.PWgkO7sO"
   }
 ]

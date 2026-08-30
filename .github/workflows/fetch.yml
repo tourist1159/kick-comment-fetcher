@@ -9,6 +9,14 @@ on:
 permissions:
   contents: write   # ← これが重要！pushするために必要
 
+# 同時実行を防ぐ。コメント取得は1配信ぶんを5秒刻みでページングするため、4時間の配信で
+# 80分ほどかかる(実測)。その最中に別の run が走ると、両者が kick_archives.json を
+# 書いて git pull --rebase でコンフリクトし、後から終わった方が失敗する(実測)。
+# cancel-in-progress: false = 走行中のものは殺さず、次を待たせる。
+concurrency:
+  group: kick-fetch
+  cancel-in-progress: false
+
 jobs:
   fetch:
     runs-on: ubuntu-latest

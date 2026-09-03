@@ -2595,5 +2595,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/MLhJhtPsqPbI/720.webp",
     "number_of_comments": 25658
+  },
+  {
+    "id": 125423175,
+    "video_id": 121122378,
+    "uuid": "5d9fbaa3-c8ba-4e65-b9a7-f358299be1d9",
+    "title": "謎のコラボをする件",
+    "start_time": "2026-09-03T09:35:16+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a0669f-6020-775d-8688-4673265a01ce",
+    "duration": 1671000,
+    "video_length": "00:27:51",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/pX5vjmjo7dGX/720.webp?versionId=b4voq4ydTF161YAxKVLyJgbsV_TWe5fQ"
   }
 ]

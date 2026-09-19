@@ -2660,5 +2660,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/Wk5CBhltaISY/720.webp",
     "number_of_comments": 24920
+  },
+  {
+    "id": 128038335,
+    "video_id": 123737228,
+    "uuid": "e990c691-af87-4cc4-9800-2d3eb212621c",
+    "title": "Vtuberです",
+    "start_time": "2026-09-19T06:49:40+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a0b86d-83a0-788d-a62a-e30dfba2f6e9",
+    "duration": 5908000,
+    "video_length": "01:38:28",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/GgXwkWVGtuTP/720.webp?versionId=Ptd.0CNHAE5ziNErhykdxiAm39eVE9Wf"
   }
 ]

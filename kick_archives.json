@@ -2725,5 +2725,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/KLHWt51vRzHk/720.webp",
     "number_of_comments": 7345
+  },
+  {
+    "id": 129226813,
+    "video_id": 124925586,
+    "uuid": "62e50289-2294-44b7-b964-d0598f6cd82d",
+    "title": "本当の孤高",
+    "start_time": "2026-09-26T15:22:19+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a0de4f-5ff8-7a37-b22b-62db8141f7e2",
+    "duration": 7796000,
+    "video_length": "02:09:56",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/TsoItxQBPuGn/720.webp?versionId=fIyyg9X1KzxnJfbkm_T_VDR48rOBqUTB"
   }
 ]

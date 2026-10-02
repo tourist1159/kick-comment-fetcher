@@ -2764,5 +2764,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/bY3AUdjZkrnW/720.webp",
     "number_of_comments": 9778
+  },
+  {
+    "id": 130192526,
+    "video_id": 125891153,
+    "uuid": "078fcbca-04dd-4e4e-9a64-c538398a8c82",
+    "title": "話す",
+    "start_time": "2026-10-02T10:40:10+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a0fc33-3710-738d-9698-28f228cdcd3f",
+    "duration": 6939000,
+    "video_length": "01:55:39",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/noGWgexPer9q/720.webp?versionId=qrESBBKig89Tw0lAPfJkmlp._WGhJxAh"
   }
 ]

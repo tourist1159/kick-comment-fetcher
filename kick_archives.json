@@ -2894,5 +2894,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/MOn3dF5JikTW/720.webp",
     "number_of_comments": 34873
+  },
+  {
+    "id": 132563289,
+    "video_id": 128261600,
+    "uuid": "2a67e2bd-951c-4e34-87df-21dd7ecb4ac8",
+    "title": "でかけるまで",
+    "start_time": "2026-10-16T01:35:03+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a14259-2d58-7447-b216-3efbc4ebf38e",
+    "duration": 3836000,
+    "video_length": "01:03:56",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/emFj7dIUZl04/720.webp?versionId=7hWfY2_btOycl6lzXUsjSfxVjoSSPXJG"
   }
 ]

@@ -2959,5 +2959,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/35NdZB2JhuHz/720.webp",
     "number_of_comments": 51
+  },
+  {
+    "id": 133495913,
+    "video_id": 129194154,
+    "uuid": "f0fb35ac-8d0b-47b3-889c-ef6f1cf307b9",
+    "title": "ネットがやばいらしい|DRKS配信者放送",
+    "start_time": "2026-10-21T13:20:34+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a15e9e-e4d0-7958-a8b3-a50019fae074",
+    "duration": 6101000,
+    "video_length": "01:41:41",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/TJVgVGHu6D8c/720.webp"
   }
 ]

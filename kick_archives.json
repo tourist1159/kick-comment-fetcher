@@ -2972,5 +2972,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/TJVgVGHu6D8c/720.webp",
     "number_of_comments": 30027
+  },
+  {
+    "id": 134003830,
+    "video_id": 129702057,
+    "uuid": "eaa31a5a-b747-4c56-a14d-46b91c8c9317",
+    "title": "配信|DRKS",
+    "start_time": "2026-10-24T10:53:45+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a16d8b-8ea8-7df7-8b94-b9288e75edb3",
+    "duration": 23386000,
+    "video_length": "06:29:46",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/ULQHZqY6r3XG/720.webp?versionId=dVVrl0lOAXgD3XLlg8duDXN_LJ48O0Gq"
   }
 ]

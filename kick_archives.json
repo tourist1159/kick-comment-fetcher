@@ -3180,5 +3180,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/0v3ftjxsyALR/720.webp",
     "number_of_comments": 40314
+  },
+  {
+    "id": 138367188,
+    "video_id": 134065182,
+    "uuid": "e5d5c6d2-9816-4375-b50a-316bbb5ef235",
+    "title": "あ",
+    "start_time": "2026-11-17T14:22:17+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a1e9e3-19a8-7d74-868f-62bd5f9dfb3f",
+    "duration": 11983000,
+    "video_length": "03:19:43",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/3X4icACZP4nQ/720.webp"
   }
 ]

@@ -2943,7 +2943,7 @@
     "url": "https://kick.com/mokoutoaruotoko/videos/01a1583a-9648-7583-b22b-acc2d4587cbc",
     "duration": 16652000,
     "video_length": "04:37:32",
-    "available": true,
+    "available": false,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/wutbAlxgRzTb/720.webp",
     "number_of_comments": 44188
   },
@@ -3206,5 +3206,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/xteqQ4BTusGK/720.webp",
     "number_of_comments": 14431
+  },
+  {
+    "id": 138709827,
+    "video_id": 134407812,
+    "uuid": "fb1096c1-9503-40b2-8308-36bb1b80aada",
+    "title": "あさ撮り",
+    "start_time": "2026-11-19T01:07:56+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a1f158-91e0-774b-b5af-134846b192ed",
+    "duration": 7928000,
+    "video_length": "02:12:08",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/dQ5BM0qfo5a3/720.webp"
   }
 ]

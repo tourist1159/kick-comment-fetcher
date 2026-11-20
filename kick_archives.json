@@ -2956,7 +2956,7 @@
     "url": "https://kick.com/mokoutoaruotoko/videos/01a15e9c-ece8-7936-9353-5c9a07acee8e",
     "duration": 20000,
     "video_length": "00:00:20",
-    "available": true,
+    "available": false,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/35NdZB2JhuHz/720.webp",
     "number_of_comments": 51
   },
@@ -2969,7 +2969,7 @@
     "url": "https://kick.com/mokoutoaruotoko/videos/01a15e9e-e4d0-7958-a8b3-a50019fae074",
     "duration": 6101000,
     "video_length": "01:41:41",
-    "available": true,
+    "available": false,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/TJVgVGHu6D8c/720.webp",
     "number_of_comments": 30027
   },

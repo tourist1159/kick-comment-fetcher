@@ -3232,5 +3232,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/js7P5okKQR4N/720.webp",
     "number_of_comments": 37028
+  },
+  {
+    "id": 139272329,
+    "video_id": 134970290,
+    "uuid": "b7e1a9dd-521f-4d9f-8e67-6b03591ffcfa",
+    "title": "ハイゲやばい",
+    "start_time": "2026-11-21T02:43:34+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a1fbfc-d7f0-7749-ac69-28d514ebb103",
+    "duration": 6171000,
+    "video_length": "01:42:51",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/6jDUGoV2Bc2y/720.webp"
   }
 ]

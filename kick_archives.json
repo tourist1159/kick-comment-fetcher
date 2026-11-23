@@ -2982,7 +2982,7 @@
     "url": "https://kick.com/mokoutoaruotoko/videos/01a16d8b-8ea8-7df7-8b94-b9288e75edb3",
     "duration": 23386000,
     "video_length": "06:29:46",
-    "available": true,
+    "available": false,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/ULQHZqY6r3XG/720.webp",
     "number_of_comments": 63144
   },
@@ -3258,5 +3258,17 @@
     "available": true,
     "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/8XApwAtLFDCd/720.webp",
     "number_of_comments": 31688
+  },
+  {
+    "id": 139741289,
+    "video_id": 135439234,
+    "uuid": "61f1b85a-59b6-4ecc-8799-339de5ec1beb",
+    "title": "あ",
+    "start_time": "2026-11-23T04:14:39+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a2069c-f398-76fa-8e8e-8cb828d3b444",
+    "duration": 13780000,
+    "video_length": "03:49:40",
+    "available": true,
+    "thumbnail": "https://images.kick.com/video_thumbnails/HoxRLbl2K6lU/C2oLSWZhkl0a/720.webp"
   }
 ]

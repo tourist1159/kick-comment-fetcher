@@ -3021,7 +3021,7 @@
     "url": "https://kick.com/mokoutoaruotoko/videos/01a17c88-8c30-765d-96b0-47d344d666fc",
     "duration": 3658000,
     "video_length": "01:00:58",
-    "available": true,
+    "available": false,
     "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720",
     "number_of_comments": 13519
   },

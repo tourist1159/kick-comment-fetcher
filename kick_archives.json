@@ -3308,6 +3308,7 @@
     "duration": 1855000,
     "video_length": "00:30:55",
     "available": true,
-    "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720"
+    "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720",
+    "number_of_comments": 7259
   }
 ]

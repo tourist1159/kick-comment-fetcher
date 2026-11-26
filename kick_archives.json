@@ -3297,5 +3297,17 @@
     "available": true,
     "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720",
     "number_of_comments": 97894
+  },
+  {
+    "id": 140402441,
+    "video_id": 136100358,
+    "uuid": "d91b9259-1b0d-4c3a-af74-885d9912a6d6",
+    "title": "さあ",
+    "start_time": "2026-11-26T16:29:42+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a218b0-fcf0-7f27-b87b-1194a55ef7c8",
+    "duration": 1855000,
+    "video_length": "00:30:55",
+    "available": true,
+    "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720"
   }
 ]

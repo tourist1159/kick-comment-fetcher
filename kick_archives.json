@@ -3310,5 +3310,17 @@
     "available": true,
     "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720",
     "number_of_comments": 7259
+  },
+  {
+    "id": 140554539,
+    "video_id": 136252393,
+    "uuid": "a6a53f56-8553-4902-ae5d-8aea3970f4f4",
+    "title": "ハイゲ",
+    "start_time": "2026-11-27T11:40:07+00:00",
+    "url": "https://kick.com/mokoutoaruotoko/videos/01a21cce-39d8-7f5b-aab9-20b10eea1968",
+    "duration": 669000,
+    "video_length": "00:11:09",
+    "available": true,
+    "thumbnail": "https://web.kick.com/api/v1/channels/56495977/thumbnail.jpeg?height=720"
   }
 ]
